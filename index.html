@@ -5,30 +5,26 @@
 <title>The Count</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
 <style>
-  /* If you want the exact font, add CoolJazz.woff2 to the same folder and it will load */
-  @font-face{
-    font-family: "Cool Jazz";
-    src: url("CoolJazz.woff2") format("woff2"),
-         url("CoolJazz.woff") format("woff");
-    font-display: swap;
-  }
-
   :root{
-    --bgTop: #0d0d10;
-    --bgMid: #09090b;
-    --bgBottom: #050507;
+    --bgTop: #0d0d0f;
+    --bgMid: #0a0a0c;
+    --bgBottom: #060607;
 
-    --text: rgba(255,255,255,0.94);
-    --muted: rgba(255,255,255,0.72);
-    --muted2: rgba(255,255,255,0.55);
+    --text: rgba(255,255,255,0.92);
+    --muted: rgba(255,255,255,0.70);
+    --muted2: rgba(255,255,255,0.52);
 
-    --panel: rgba(255,255,255,0.05);
-    --panelBorder: rgba(255,255,255,0.10);
+    --panel: rgba(255,255,255,0.055);
+    --panelBorder: rgba(255,255,255,0.12);
 
-    --edge: rgba(255,255,255,0.22);
-    --edgeSoft: rgba(255,255,255,0.10);
-    --glow: rgba(255,255,255,0.22);
+    --edge: rgba(255,255,255,0.16);
+    --edgeSoft: rgba(255,255,255,0.08);
+    --shine: rgba(255,255,255,0.06);
   }
 
   body{
@@ -41,9 +37,7 @@
     color: var(--text);
     text-align: center;
     overflow: hidden;
-
-    /* Cool Jazz font, with safe fallback */
-    font-family: "Cool Jazz", ui-rounded, "SF Pro Rounded", "Segoe UI", system-ui, -apple-system, Roboto, Helvetica, Arial, sans-serif;
+    font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   }
 
   .theme-layer{
@@ -52,48 +46,55 @@
     z-index: 0;
     pointer-events: none;
     background:
-      radial-gradient(900px 520px at 50% 30%, rgba(255,255,255,0.06), transparent 62%),
-      radial-gradient(800px 500px at 20% 80%, rgba(255,255,255,0.03), transparent 60%),
-      linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0));
+      radial-gradient(1000px 600px at 50% 25%, rgba(255,255,255,0.05), transparent 60%),
+      radial-gradient(900px 600px at 20% 85%, rgba(255,255,255,0.03), transparent 60%),
+      radial-gradient(900px 600px at 85% 80%, rgba(255,255,255,0.02), transparent 62%);
   }
 
   .container{
-    width: min(900px, 94vw);
-    padding: 44px 18px 46px;
+    width: min(980px, 94vw);
+    padding: 44px 18px 52px;
     position: relative;
     z-index: 1;
   }
 
   h1{
-    margin: 0 0 18px;
-    font-weight: 650;
-    font-size: 2.05rem;
-    letter-spacing: 0.8px;
-    text-transform: none;
+    margin: 0 0 12px;
+    font-family: "Caveat", cursive;
+    font-weight: 700;
+    font-size: 3.1rem;
+    letter-spacing: 0.6px;
+    color: rgba(255,255,255,0.94);
+  }
+
+  .subline{
+    margin: 0 0 22px;
+    font-size: 0.95rem;
+    color: var(--muted2);
+    letter-spacing: 0.2px;
   }
 
   .start-card{
-    margin: 0 auto 18px;
-    width: min(680px, 92vw);
-    padding: 16px 14px;
+    margin: 0 auto 16px;
+    width: min(720px, 92vw);
+    padding: 16px 16px;
     border-radius: 18px;
     background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
-    border: 1px solid rgba(255,255,255,0.12);
+    border: 1px solid var(--panelBorder);
     backdrop-filter: blur(10px);
-    box-shadow: 0 14px 38px rgba(0,0,0,0.45);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.52);
   }
 
   .start{
     margin: 0;
     font-size: 0.95rem;
-    line-height: 1.55;
+    line-height: 1.6;
     color: var(--muted);
   }
 
   .start strong{
-    color: var(--text);
+    color: rgba(255,255,255,0.94);
     font-weight: 700;
-    letter-spacing: 0.3px;
   }
 
   .format-note{
@@ -105,124 +106,111 @@
   .now-list{
     margin-top: 12px;
     display: grid;
-    gap: 6px;
+    gap: 7px;
     font-size: 0.92rem;
     color: var(--muted);
   }
 
   .now-item strong{
-    color: var(--text);
+    color: rgba(255,255,255,0.94);
     font-weight: 650;
   }
 
-  /* Layout stays like before */
-  .metrics{
-    margin-top: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 56px;
-    flex-wrap: wrap;
-  }
-
-  .metric{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  /* Youth “cool” timer cards */
-  .time-wrap{
-    position: relative;
-    padding: 18px 26px;
+  /* Rebuilt timer visualisation */
+  .scoreboard{
+    margin: 26px auto 0;
+    width: min(920px, 94vw);
     border-radius: 22px;
     background:
-      radial-gradient(140px 80px at 50% 20%, rgba(255,255,255,0.10), rgba(255,255,255,0.02) 65%),
+      radial-gradient(900px 240px at 50% 0%, var(--shine), rgba(255,255,255,0.02) 55%),
       linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
-    border: 1px solid var(--edgeSoft);
-    box-shadow:
-      0 18px 44px rgba(0,0,0,0.55),
-      0 0 0 1px rgba(255,255,255,0.04) inset;
-    backdrop-filter: blur(12px);
+    border: 1px solid var(--edge);
+    box-shadow: 0 22px 55px rgba(0,0,0,0.60);
     overflow: hidden;
-    transform: translateZ(0);
+    backdrop-filter: blur(12px);
   }
 
-  /* Thin edge glow */
-  .time-wrap::before{
+  .scoreboard-inner{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .slot{
+    padding: 22px 18px 18px;
+    position: relative;
+  }
+
+  .slot:not(:last-child)::after{
     content: "";
     position: absolute;
-    inset: 0;
-    border-radius: 22px;
-    padding: 1px;
-    background: linear-gradient(135deg, rgba(255,255,255,0.28), rgba(255,255,255,0.06), rgba(255,255,255,0.20));
-    -webkit-mask:
-      linear-gradient(#000 0 0) content-box,
-      linear-gradient(#000 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    opacity: 0.75;
-    pointer-events: none;
+    top: 18px;
+    bottom: 18px;
+    right: 0;
+    width: 1px;
+    background: rgba(255,255,255,0.09);
   }
 
-  /* Gentle “stage” shine */
-  .time-wrap::after{
-    content: "";
-    position: absolute;
-    width: 140%;
-    height: 120%;
-    left: -20%;
-    top: -65%;
-    background: radial-gradient(circle, rgba(255,255,255,0.10), transparent 60%);
-    opacity: 0.5;
-    pointer-events: none;
-    transform: rotate(-10deg);
-  }
-
-  .time{
+  .digit{
     font-variant-numeric: tabular-nums;
     font-feature-settings: "tnum" 1;
     font-weight: 800;
-    font-size: 3.05rem;
-    letter-spacing: 0.6px;
-    margin: 0;
-    color: rgba(255,255,255,0.96);
-    text-shadow: 0 0 18px var(--glow);
-    transition: transform 140ms ease, filter 140ms ease;
+    font-size: 3.1rem;
+    line-height: 1.05;
+    letter-spacing: 0.8px;
+    color: rgba(255,255,255,0.95);
+    text-shadow: 0 0 18px rgba(255,255,255,0.14);
+    display: inline-block;
+    transform: translateZ(0);
   }
 
-  .time.days{
-    font-size: 3.45rem;
+  .divider{
+    margin: 12px auto 10px;
+    width: 44px;
+    height: 1px;
+    background: rgba(255,255,255,0.18);
   }
 
-  .label{
-    margin-top: 12px;
+  .tag{
     font-size: 0.78rem;
-    letter-spacing: 2.0px;
+    letter-spacing: 2.2px;
     text-transform: uppercase;
     color: rgba(255,255,255,0.55);
   }
 
-  /* Micro “pop” animation on update */
-  .pop{
-    transform: scale(1.05);
-    filter: brightness(1.06);
+  /* Subtle pulse on change */
+  .pulse{
+    animation: pulse 180ms ease-out;
   }
 
-  @media (max-width: 600px){
-    .metrics{ gap: 26px; }
-    .time{ font-size: 2.55rem; }
-    .time.days{ font-size: 2.9rem; }
+  @keyframes pulse{
+    0%{ transform: scale(1); filter: brightness(1); }
+    55%{ transform: scale(1.05); filter: brightness(1.08); }
+    100%{ transform: scale(1); filter: brightness(1); }
+  }
+
+  @media (max-width: 780px){
+    h1{ font-size: 2.7rem; }
+    .digit{ font-size: 2.4rem; }
+    .scoreboard-inner{ grid-template-columns: repeat(2, 1fr); }
+    .slot:nth-child(2)::after{ display: none; }
+    .slot:nth-child(1), .slot:nth-child(2){ border-bottom: 1px solid rgba(255,255,255,0.09); }
+    .slot:nth-child(1)::after{ display: none; }
+    .slot:nth-child(3)::after{ display: none; }
+  }
+
+  @media (max-width: 420px){
+    .digit{ font-size: 2.2rem; }
+    .tag{ letter-spacing: 1.7px; }
   }
 </style>
 </head>
 
 <body>
-
 <div class="theme-layer" aria-hidden="true"></div>
 
 <div class="container">
   <h1>The Count</h1>
+  <div class="subline">A clean counter, styled with a cool jazz mood.</div>
 
   <div class="start-card">
     <div class="start">
@@ -238,25 +226,31 @@
     </div>
   </div>
 
-  <div class="metrics">
-    <div class="metric">
-      <div class="time-wrap"><div class="time days" id="days">0</div></div>
-      <div class="label">Days</div>
-    </div>
+  <div class="scoreboard" aria-label="Elapsed time counter">
+    <div class="scoreboard-inner">
+      <div class="slot">
+        <div class="digit" id="days">0</div>
+        <div class="divider"></div>
+        <div class="tag">Days</div>
+      </div>
 
-    <div class="metric">
-      <div class="time-wrap"><div class="time" id="hours">0</div></div>
-      <div class="label">Hours</div>
-    </div>
+      <div class="slot">
+        <div class="digit" id="hours">0</div>
+        <div class="divider"></div>
+        <div class="tag">Hours</div>
+      </div>
 
-    <div class="metric">
-      <div class="time-wrap"><div class="time" id="minutes">0</div></div>
-      <div class="label">Minutes</div>
-    </div>
+      <div class="slot">
+        <div class="digit" id="minutes">0</div>
+        <div class="divider"></div>
+        <div class="tag">Minutes</div>
+      </div>
 
-    <div class="metric">
-      <div class="time-wrap"><div class="time" id="seconds">0</div></div>
-      <div class="label">Seconds</div>
+      <div class="slot">
+        <div class="digit" id="seconds">0</div>
+        <div class="divider"></div>
+        <div class="tag">Seconds</div>
+      </div>
     </div>
   </div>
 </div>
@@ -293,12 +287,12 @@
     el.querySelector("span").textContent = fmt.date.format(now);
   }
 
-  function pop(el){
-    el.classList.add("pop");
-    setTimeout(() => el.classList.remove("pop"), 140);
-  }
-
   const lastValues = { days: null, hours: null, minutes: null, seconds: null };
+
+  function pulse(el){
+    el.classList.add("pulse");
+    setTimeout(() => el.classList.remove("pulse"), 190);
+  }
 
   function updateTimer(){
     const diffMs = Date.now() - startTime;
@@ -318,18 +312,18 @@
     const m = Math.floor((total % 3600) / 60);
     const s = total % 60;
 
-    const map = [
+    const pairs = [
       ["days", d],
       ["hours", h],
       ["minutes", m],
       ["seconds", s]
     ];
 
-    for (const [id, val] of map) {
+    for (const [id, val] of pairs) {
       const el = document.getElementById(id);
       if (lastValues[id] !== val) {
         el.textContent = val;
-        pop(el);
+        pulse(el);
         lastValues[id] = val;
       }
     }
