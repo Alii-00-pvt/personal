@@ -6,17 +6,29 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
+  /* If you want the exact font, add CoolJazz.woff2 to the same folder and it will load */
+  @font-face{
+    font-family: "Cool Jazz";
+    src: url("CoolJazz.woff2") format("woff2"),
+         url("CoolJazz.woff") format("woff");
+    font-display: swap;
+  }
+
   :root{
-    --bgTop: #121214;
-    --bgMid: #0e0e10;
-    --bgBottom: #0b0b0d;
+    --bgTop: #0d0d10;
+    --bgMid: #09090b;
+    --bgBottom: #050507;
 
-    --text: rgba(255,255,255,0.92);
+    --text: rgba(255,255,255,0.94);
     --muted: rgba(255,255,255,0.72);
-    --muted2: rgba(255,255,255,0.56);
+    --muted2: rgba(255,255,255,0.55);
 
-    --panel: rgba(255,255,255,0.06);
+    --panel: rgba(255,255,255,0.05);
     --panelBorder: rgba(255,255,255,0.10);
+
+    --edge: rgba(255,255,255,0.22);
+    --edgeSoft: rgba(255,255,255,0.10);
+    --glow: rgba(255,255,255,0.22);
   }
 
   body{
@@ -25,10 +37,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     background: linear-gradient(180deg, var(--bgTop), var(--bgMid), var(--bgBottom));
     color: var(--text);
     text-align: center;
+    overflow: hidden;
+
+    /* Cool Jazz font, with safe fallback */
+    font-family: "Cool Jazz", ui-rounded, "SF Pro Rounded", "Segoe UI", system-ui, -apple-system, Roboto, Helvetica, Arial, sans-serif;
   }
 
   .theme-layer{
@@ -37,8 +52,9 @@
     z-index: 0;
     pointer-events: none;
     background:
-      radial-gradient(1000px 600px at 50% 30%, rgba(255,255,255,0.04), transparent 60%),
-      radial-gradient(900px 600px at 80% 80%, rgba(255,255,255,0.025), transparent 65%);
+      radial-gradient(900px 520px at 50% 30%, rgba(255,255,255,0.06), transparent 62%),
+      radial-gradient(800px 500px at 20% 80%, rgba(255,255,255,0.03), transparent 60%),
+      linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0));
   }
 
   .container{
@@ -50,19 +66,21 @@
 
   h1{
     margin: 0 0 18px;
-    font-weight: 600;
-    font-size: 1.9rem;
-    letter-spacing: 0.6px;
+    font-weight: 650;
+    font-size: 2.05rem;
+    letter-spacing: 0.8px;
+    text-transform: none;
   }
 
   .start-card{
     margin: 0 auto 18px;
-    width: min(640px, 92vw);
+    width: min(680px, 92vw);
     padding: 16px 14px;
-    border-radius: 16px;
-    background: var(--panel);
-    border: 1px solid var(--panelBorder);
+    border-radius: 18px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+    border: 1px solid rgba(255,255,255,0.12);
     backdrop-filter: blur(10px);
+    box-shadow: 0 14px 38px rgba(0,0,0,0.45);
   }
 
   .start{
@@ -74,7 +92,8 @@
 
   .start strong{
     color: var(--text);
-    font-weight: 600;
+    font-weight: 700;
+    letter-spacing: 0.3px;
   }
 
   .format-note{
@@ -93,17 +112,16 @@
 
   .now-item strong{
     color: var(--text);
-    font-weight: 600;
+    font-weight: 650;
   }
 
-  /* ===== RESTORED LAYOUT ===== */
-
+  /* Layout stays like before */
   .metrics{
     margin-top: 30px;
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    gap: 60px;
+    gap: 56px;
     flex-wrap: wrap;
   }
 
@@ -113,46 +131,95 @@
     align-items: center;
   }
 
+  /* Youth “cool” timer cards */
   .time-wrap{
-    padding: 18px 24px;
-    border-radius: 20px;
-    background: rgba(255,255,255,0.045);
-    border: 1px solid rgba(255,255,255,0.08);
-    backdrop-filter: blur(10px);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+    position: relative;
+    padding: 18px 26px;
+    border-radius: 22px;
+    background:
+      radial-gradient(140px 80px at 50% 20%, rgba(255,255,255,0.10), rgba(255,255,255,0.02) 65%),
+      linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+    border: 1px solid var(--edgeSoft);
+    box-shadow:
+      0 18px 44px rgba(0,0,0,0.55),
+      0 0 0 1px rgba(255,255,255,0.04) inset;
+    backdrop-filter: blur(12px);
+    overflow: hidden;
+    transform: translateZ(0);
+  }
+
+  /* Thin edge glow */
+  .time-wrap::before{
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 22px;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.28), rgba(255,255,255,0.06), rgba(255,255,255,0.20));
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0.75;
+    pointer-events: none;
+  }
+
+  /* Gentle “stage” shine */
+  .time-wrap::after{
+    content: "";
+    position: absolute;
+    width: 140%;
+    height: 120%;
+    left: -20%;
+    top: -65%;
+    background: radial-gradient(circle, rgba(255,255,255,0.10), transparent 60%);
+    opacity: 0.5;
+    pointer-events: none;
+    transform: rotate(-10deg);
   }
 
   .time{
     font-variant-numeric: tabular-nums;
-    font-weight: 650;
-    font-size: 2.8rem;
+    font-feature-settings: "tnum" 1;
+    font-weight: 800;
+    font-size: 3.05rem;
+    letter-spacing: 0.6px;
     margin: 0;
+    color: rgba(255,255,255,0.96);
+    text-shadow: 0 0 18px var(--glow);
+    transition: transform 140ms ease, filter 140ms ease;
   }
 
   .time.days{
-    font-size: 3.2rem;
+    font-size: 3.45rem;
   }
 
   .label{
     margin-top: 12px;
     font-size: 0.78rem;
-    letter-spacing: 1.6px;
+    letter-spacing: 2.0px;
     text-transform: uppercase;
-    color: var(--muted2);
+    color: rgba(255,255,255,0.55);
   }
 
-  /* Mobile stacking only */
+  /* Micro “pop” animation on update */
+  .pop{
+    transform: scale(1.05);
+    filter: brightness(1.06);
+  }
+
   @media (max-width: 600px){
-    .metrics{
-      gap: 28px;
-    }
+    .metrics{ gap: 26px; }
+    .time{ font-size: 2.55rem; }
+    .time.days{ font-size: 2.9rem; }
   }
 </style>
 </head>
 
 <body>
 
-<div class="theme-layer"></div>
+<div class="theme-layer" aria-hidden="true"></div>
 
 <div class="container">
   <h1>The Count</h1>
@@ -164,7 +231,7 @@
       <div class="format-note">Times are shown in 24-hour format</div>
     </div>
 
-    <div class="now-list">
+    <div class="now-list" aria-label="Current local times">
       <div class="now-item" id="nowManchester">Manchester, UK: <strong>00:00:00</strong> • <span>01 January 1970</span></div>
       <div class="now-item" id="nowJeddah">Jeddah, Saudi Arabia: <strong>00:00:00</strong> • <span>01 January 1970</span></div>
       <div class="now-item" id="nowHyderabad">Hyderabad, India: <strong>00:00:00</strong> • <span>01 January 1970</span></div>
@@ -226,15 +293,46 @@
     el.querySelector("span").textContent = fmt.date.format(now);
   }
 
+  function pop(el){
+    el.classList.add("pop");
+    setTimeout(() => el.classList.remove("pop"), 140);
+  }
+
+  const lastValues = { days: null, hours: null, minutes: null, seconds: null };
+
   function updateTimer(){
     const diffMs = Date.now() - startTime;
-    if (diffMs < 0) return;
+
+    if (diffMs < 0) {
+      document.getElementById("days").textContent = "Not started";
+      document.getElementById("hours").textContent = "";
+      document.getElementById("minutes").textContent = "";
+      document.getElementById("seconds").textContent = "";
+      return;
+    }
 
     const total = Math.floor(diffMs / 1000);
-    document.getElementById("days").textContent = Math.floor(total / 86400);
-    document.getElementById("hours").textContent = Math.floor((total % 86400) / 3600);
-    document.getElementById("minutes").textContent = Math.floor((total % 3600) / 60);
-    document.getElementById("seconds").textContent = total % 60;
+
+    const d = Math.floor(total / 86400);
+    const h = Math.floor((total % 86400) / 3600);
+    const m = Math.floor((total % 3600) / 60);
+    const s = total % 60;
+
+    const map = [
+      ["days", d],
+      ["hours", h],
+      ["minutes", m],
+      ["seconds", s]
+    ];
+
+    for (const [id, val] of map) {
+      const el = document.getElementById(id);
+      if (lastValues[id] !== val) {
+        el.textContent = val;
+        pop(el);
+        lastValues[id] = val;
+      }
+    }
   }
 
   function tick(){
