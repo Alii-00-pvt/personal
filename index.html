@@ -23,8 +23,35 @@
     --panelBorder: rgba(255,255,255,0.12);
 
     --edge: rgba(255,255,255,0.16);
-    --edgeSoft: rgba(255,255,255,0.08);
     --shine: rgba(255,255,255,0.06);
+
+    --toggleBorder: rgba(255,255,255,0.18);
+    --toggleBg: rgba(255,255,255,0.06);
+    --toggleHover: rgba(255,255,255,0.10);
+  }
+
+  [data-theme="light"]{
+    --bgTop: #f7f7f8;
+    --bgMid: #f1f1f3;
+    --bgBottom: #eaeaed;
+
+    --text: rgba(10,10,12,0.94);
+    --muted: rgba(10,10,12,0.70);
+    --muted2: rgba(10,10,12,0.52);
+
+    --panel: rgba(255,255,255,0.72);
+    --panelBorder: rgba(0,0,0,0.10);
+
+    --edge: rgba(0,0,0,0.12);
+    --shine: rgba(255,255,255,0.35);
+
+    --toggleBorder: rgba(0,0,0,0.12);
+    --toggleBg: rgba(255,255,255,0.65);
+    --toggleHover: rgba(255,255,255,0.92);
+  }
+
+  *{
+    box-sizing: border-box;
   }
 
   body{
@@ -38,6 +65,7 @@
     text-align: center;
     overflow: hidden;
     font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    transition: background 220ms ease, color 220ms ease;
   }
 
   .theme-layer{
@@ -51,11 +79,44 @@
       radial-gradient(900px 600px at 85% 80%, rgba(255,255,255,0.02), transparent 62%);
   }
 
+  [data-theme="light"] .theme-layer{
+    background:
+      radial-gradient(1000px 600px at 50% 25%, rgba(255,255,255,0.75), transparent 60%),
+      radial-gradient(900px 600px at 20% 85%, rgba(255,255,255,0.45), transparent 60%),
+      radial-gradient(900px 600px at 85% 80%, rgba(255,255,255,0.28), transparent 62%);
+  }
+
   .container{
     width: min(980px, 94vw);
     padding: 44px 18px 52px;
     position: relative;
     z-index: 1;
+  }
+
+  .theme-toggle{
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    border: 1px solid var(--toggleBorder);
+    background: var(--toggleBg);
+    color: var(--text);
+    padding: 9px 14px;
+    border-radius: 999px;
+    font-family: inherit;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    transition: background 180ms ease, border-color 180ms ease, transform 120ms ease, color 220ms ease;
+  }
+
+  .theme-toggle:hover{
+    background: var(--toggleHover);
+  }
+
+  .theme-toggle:active{
+    transform: scale(0.98);
   }
 
   h1{
@@ -64,14 +125,7 @@
     font-weight: 700;
     font-size: 3.1rem;
     letter-spacing: 0.6px;
-    color: rgba(255,255,255,0.94);
-  }
-
-  .subline{
-    margin: 0 0 22px;
-    font-size: 0.95rem;
-    color: var(--muted2);
-    letter-spacing: 0.2px;
+    color: var(--text);
   }
 
   .start-card{
@@ -82,7 +136,12 @@
     background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
     border: 1px solid var(--panelBorder);
     backdrop-filter: blur(10px);
-    box-shadow: 0 16px 40px rgba(0,0,0,0.52);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.25);
+    transition: background 220ms ease, border-color 220ms ease;
+  }
+
+  [data-theme="light"] .start-card{
+    box-shadow: 0 18px 38px rgba(0,0,0,0.08);
   }
 
   .start{
@@ -93,7 +152,7 @@
   }
 
   .start strong{
-    color: rgba(255,255,255,0.94);
+    color: var(--text);
     font-weight: 700;
   }
 
@@ -112,11 +171,10 @@
   }
 
   .now-item strong{
-    color: rgba(255,255,255,0.94);
+    color: var(--text);
     font-weight: 650;
   }
 
-  /* Rebuilt timer visualisation */
   .scoreboard{
     margin: 26px auto 0;
     width: min(920px, 94vw);
@@ -125,9 +183,14 @@
       radial-gradient(900px 240px at 50% 0%, var(--shine), rgba(255,255,255,0.02) 55%),
       linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
     border: 1px solid var(--edge);
-    box-shadow: 0 22px 55px rgba(0,0,0,0.60);
+    box-shadow: 0 22px 55px rgba(0,0,0,0.30);
     overflow: hidden;
     backdrop-filter: blur(12px);
+    transition: background 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+  }
+
+  [data-theme="light"] .scoreboard{
+    box-shadow: 0 18px 42px rgba(0,0,0,0.10);
   }
 
   .scoreboard-inner{
@@ -150,6 +213,10 @@
     background: rgba(255,255,255,0.09);
   }
 
+  [data-theme="light"] .slot:not(:last-child)::after{
+    background: rgba(0,0,0,0.10);
+  }
+
   .digit{
     font-variant-numeric: tabular-nums;
     font-feature-settings: "tnum" 1;
@@ -157,10 +224,14 @@
     font-size: 3.1rem;
     line-height: 1.05;
     letter-spacing: 0.8px;
-    color: rgba(255,255,255,0.95);
-    text-shadow: 0 0 18px rgba(255,255,255,0.14);
+    color: var(--text);
+    text-shadow: 0 0 18px rgba(255,255,255,0.10);
     display: inline-block;
     transform: translateZ(0);
+  }
+
+  [data-theme="light"] .digit{
+    text-shadow: none;
   }
 
   .divider{
@@ -170,14 +241,17 @@
     background: rgba(255,255,255,0.18);
   }
 
+  [data-theme="light"] .divider{
+    background: rgba(0,0,0,0.18);
+  }
+
   .tag{
     font-size: 0.78rem;
     letter-spacing: 2.2px;
     text-transform: uppercase;
-    color: rgba(255,255,255,0.55);
+    color: var(--muted2);
   }
 
-  /* Subtle pulse on change */
   .pulse{
     animation: pulse 180ms ease-out;
   }
@@ -190,17 +264,46 @@
 
   @media (max-width: 780px){
     h1{ font-size: 2.7rem; }
+
     .digit{ font-size: 2.4rem; }
-    .scoreboard-inner{ grid-template-columns: repeat(2, 1fr); }
-    .slot:nth-child(2)::after{ display: none; }
-    .slot:nth-child(1), .slot:nth-child(2){ border-bottom: 1px solid rgba(255,255,255,0.09); }
-    .slot:nth-child(1)::after{ display: none; }
-    .slot:nth-child(3)::after{ display: none; }
+
+    .scoreboard-inner{
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .slot:nth-child(2)::after{
+      display: none;
+    }
+
+    .slot:nth-child(1),
+    .slot:nth-child(2){
+      border-bottom: 1px solid rgba(255,255,255,0.09);
+    }
+
+    [data-theme="light"] .slot:nth-child(1),
+    [data-theme="light"] .slot:nth-child(2){
+      border-bottom: 1px solid rgba(0,0,0,0.10);
+    }
+
+    .slot:nth-child(1)::after,
+    .slot:nth-child(3)::after{
+      display: none;
+    }
+
+    .theme-toggle{
+      top: 0;
+      right: 0;
+    }
   }
 
   @media (max-width: 420px){
     .digit{ font-size: 2.2rem; }
     .tag{ letter-spacing: 1.7px; }
+    h1{ font-size: 2.45rem; }
+    .theme-toggle{
+      padding: 8px 12px;
+      font-size: 0.78rem;
+    }
   }
 </style>
 </head>
@@ -209,6 +312,8 @@
 <div class="theme-layer" aria-hidden="true"></div>
 
 <div class="container">
+  <button class="theme-toggle" id="themeToggle" type="button">White theme</button>
+
   <h1>The Count</h1>
 
   <div class="start-card">
@@ -255,6 +360,22 @@
 </div>
 
 <script>
+  const toggle = document.getElementById("themeToggle");
+
+  function setTheme(theme){
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("the-count-theme", theme);
+    toggle.textContent = theme === "dark" ? "White theme" : "Dark theme";
+  }
+
+  toggle.addEventListener("click", () => {
+    const current = document.documentElement.getAttribute("data-theme") || "dark";
+    setTheme(current === "dark" ? "light" : "dark");
+  });
+
+  const savedTheme = localStorage.getItem("the-count-theme") || "dark";
+  setTheme(savedTheme);
+
   const startTime = Date.UTC(2026, 1, 13, 15, 46, 0);
 
   function makeFormatters(timeZone){
@@ -286,7 +407,12 @@
     el.querySelector("span").textContent = fmt.date.format(now);
   }
 
-  const lastValues = { days: null, hours: null, minutes: null, seconds: null };
+  const lastValues = {
+    days: null,
+    hours: null,
+    minutes: null,
+    seconds: null
+  };
 
   function pulse(el){
     el.classList.add("pulse");
