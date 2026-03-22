@@ -42,7 +42,15 @@
   --shine:rgba(255,255,255,0.35);
 }
 
-*{box-sizing:border-box;}
+*{
+  box-sizing:border-box;
+}
+
+html, body{
+  width:100%;
+  max-width:100%;
+  overflow-x:hidden;
+}
 
 body{
   margin:0;
@@ -53,8 +61,9 @@ body{
   background:linear-gradient(180deg,var(--bgTop),var(--bgMid),var(--bgBottom));
   color:var(--text);
   text-align:center;
-  overflow:hidden;
+  overflow-y:auto;
   font-family:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  padding:24px 0;
 }
 
 .container{
@@ -65,18 +74,21 @@ body{
 }
 
 .quote{
-  margin-bottom:18px;
+  margin:0 auto 22px;
+  max-width:760px;
   font-size:1.2rem;
   color:var(--muted);
   line-height:1.8;
   direction:rtl;
+  unicode-bidi:plaintext;
 }
 
 h1{
   margin:0 0 12px;
   font-family:"Caveat",cursive;
   font-weight:700;
-  font-size:3.1rem;
+  font-size:clamp(2.4rem, 7vw, 3.1rem);
+  line-height:1.05;
 }
 
 .start-card{
@@ -92,10 +104,12 @@ h1{
 .start{
   font-size:0.95rem;
   color:var(--muted);
+  line-height:1.45;
 }
 
 .start strong{
   color:var(--text);
+  word-break:break-word;
 }
 
 .now-list{
@@ -103,6 +117,7 @@ h1{
   display:grid;
   gap:7px;
   font-size:0.92rem;
+  line-height:1.45;
 }
 
 .scoreboard{
@@ -114,22 +129,110 @@ h1{
 
 .scoreboard-inner{
   display:grid;
-  grid-template-columns:repeat(4,1fr);
+  grid-template-columns:repeat(4,minmax(0,1fr));
 }
 
 .slot{
-  padding:22px;
+  padding:22px 14px;
+  min-width:0;
 }
 
 .digit{
-  font-size:3rem;
+  font-size:clamp(2.2rem, 6vw, 3rem);
   font-weight:800;
+  line-height:1;
+  overflow-wrap:anywhere;
 }
 
 .tag{
+  margin-top:10px;
   font-size:0.75rem;
   letter-spacing:2px;
   color:var(--muted2);
+}
+
+@media (max-width: 768px){
+  body{
+    align-items:flex-start;
+    padding:18px 0 28px;
+  }
+
+  .container{
+    width:min(100%,94vw);
+    padding:28px 10px 36px;
+  }
+
+  .quote{
+    font-size:1rem;
+    line-height:1.9;
+    margin-bottom:18px;
+  }
+
+  .start-card{
+    padding:14px 12px;
+    border-radius:16px;
+  }
+
+  .now-list{
+    font-size:0.9rem;
+  }
+
+  .scoreboard-inner{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+
+  .slot{
+    padding:18px 10px;
+  }
+
+  .digit{
+    font-size:clamp(2rem, 10vw, 3rem);
+  }
+
+  .tag{
+    font-size:0.72rem;
+    letter-spacing:1.5px;
+  }
+}
+
+@media (max-width: 420px){
+  .container{
+    padding:22px 8px 28px;
+  }
+
+  .quote{
+    font-size:0.92rem;
+    line-height:1.85;
+  }
+
+  .start{
+    font-size:0.9rem;
+  }
+
+  .now-list{
+    font-size:0.88rem;
+  }
+
+  .scoreboard{
+    border-radius:18px;
+  }
+
+  .scoreboard-inner{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .slot{
+    padding:16px 8px;
+  }
+
+  .digit{
+    font-size:clamp(1.9rem, 12vw, 2.6rem);
+  }
+
+  .tag{
+    font-size:0.68rem;
+    letter-spacing:1.2px;
+  }
 }
 </style>
 </head>
