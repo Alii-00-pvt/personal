@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="theme-dark">
 <head>
 <meta charset="UTF-8">
 <title>The Count</title>
@@ -7,7 +7,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
 :root{
@@ -24,22 +24,69 @@
 
   --edge:rgba(255,255,255,0.16);
   --shine:rgba(255,255,255,0.06);
+
+  --quoteColor:var(--muted);
+  --titleFont:"Caveat",cursive;
+  --digitFont:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --tagFont:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+
+  --themeBtnBg:rgba(255,255,255,0.08);
+  --themeBtnBorder:rgba(255,255,255,0.18);
+  --themeBtnText:rgba(255,255,255,0.9);
+
+  --digitGlow:none;
 }
 
-[data-theme="light"]{
-  --bgTop:#f7f7f8;
-  --bgMid:#f1f1f3;
-  --bgBottom:#eaeaed;
+html[data-theme="theme-dark"]{
+  --bgTop:#0d0d0f;
+  --bgMid:#0a0a0c;
+  --bgBottom:#060607;
 
-  --text:rgba(10,10,12,0.94);
-  --muted:rgba(10,10,12,0.70);
-  --muted2:rgba(10,10,12,0.52);
+  --text:rgba(255,255,255,0.92);
+  --muted:rgba(255,255,255,0.70);
+  --muted2:rgba(255,255,255,0.52);
 
-  --panel:rgba(255,255,255,0.72);
-  --panelBorder:rgba(0,0,0,0.10);
+  --panel:rgba(255,255,255,0.055);
+  --panelBorder:rgba(255,255,255,0.12);
 
-  --edge:rgba(0,0,0,0.12);
-  --shine:rgba(255,255,255,0.35);
+  --edge:rgba(255,255,255,0.16);
+
+  --quoteColor:var(--muted);
+  --titleFont:"Caveat",cursive;
+  --digitFont:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --tagFont:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+
+  --themeBtnBg:rgba(255,255,255,0.08);
+  --themeBtnBorder:rgba(255,255,255,0.18);
+  --themeBtnText:rgba(255,255,255,0.9);
+
+  --digitGlow:none;
+}
+
+html[data-theme="theme-minimal"]{
+  --bgTop:#efefef;
+  --bgMid:#ebebeb;
+  --bgBottom:#e8e8e8;
+
+  --text:rgba(10,10,10,0.94);
+  --muted:rgba(0,0,0,0.64);
+  --muted2:rgba(0,0,0,0.50);
+
+  --panel:rgba(255,255,255,0.42);
+  --panelBorder:rgba(0,0,0,0.05);
+
+  --edge:transparent;
+
+  --quoteColor:rgba(0,0,0,0.62);
+  --titleFont:"Caveat",cursive;
+  --digitFont:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --tagFont:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+
+  --themeBtnBg:rgba(255,255,255,0.68);
+  --themeBtnBorder:rgba(0,0,0,0.10);
+  --themeBtnText:rgba(0,0,0,0.86);
+
+  --digitGlow:none;
 }
 
 *{
@@ -64,6 +111,7 @@ body{
   overflow-y:auto;
   font-family:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
   padding:24px 0;
+  transition:background .35s ease,color .35s ease;
 }
 
 .container{
@@ -73,22 +121,49 @@ body{
   z-index:1;
 }
 
+.theme-toggle{
+  position:absolute;
+  top:8px;
+  right:0;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:124px;
+  padding:10px 14px;
+  border-radius:999px;
+  border:1px solid var(--themeBtnBorder);
+  background:var(--themeBtnBg);
+  color:var(--themeBtnText);
+  font:600 0.86rem "Inter",system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  letter-spacing:.3px;
+  cursor:pointer;
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  transition:all .25s ease;
+}
+
+.theme-toggle:hover{
+  transform:translateY(-1px);
+}
+
 .quote{
   margin:0 auto 22px;
   max-width:760px;
   font-size:1.2rem;
-  color:var(--muted);
+  color:var(--quoteColor);
   line-height:1.8;
   direction:rtl;
   unicode-bidi:plaintext;
+  transition:color .35s ease;
 }
 
 h1{
   margin:0 0 12px;
-  font-family:"Caveat",cursive;
+  font-family:var(--titleFont);
   font-weight:700;
   font-size:clamp(2.4rem, 7vw, 3.1rem);
   line-height:1.05;
+  transition:all .35s ease;
 }
 
 .start-card{
@@ -96,15 +171,18 @@ h1{
   width:min(720px,92vw);
   padding:16px;
   border-radius:18px;
-  background:rgba(255,255,255,0.05);
+  background:var(--panel);
   border:1px solid var(--panelBorder);
   backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  transition:all .35s ease;
 }
 
 .start{
   font-size:0.95rem;
   color:var(--muted);
   line-height:1.45;
+  text-align:center;
 }
 
 .start strong{
@@ -118,6 +196,7 @@ h1{
   gap:7px;
   font-size:0.92rem;
   line-height:1.45;
+  text-align:center;
 }
 
 .scoreboard{
@@ -125,6 +204,7 @@ h1{
   border-radius:22px;
   border:1px solid var(--edge);
   overflow:hidden;
+  transition:all .35s ease;
 }
 
 .scoreboard-inner{
@@ -135,6 +215,8 @@ h1{
 .slot{
   padding:22px 14px;
   min-width:0;
+  position:relative;
+  transition:all .35s ease;
 }
 
 .digit{
@@ -142,6 +224,10 @@ h1{
   font-weight:800;
   line-height:1;
   overflow-wrap:anywhere;
+  font-family:var(--digitFont);
+  text-shadow:var(--digitGlow);
+  position:relative;
+  z-index:2;
 }
 
 .tag{
@@ -149,8 +235,87 @@ h1{
   font-size:0.75rem;
   letter-spacing:2px;
   color:var(--muted2);
+  font-family:var(--tagFont);
+  position:relative;
+  z-index:2;
 }
 
+/* Minimal theme circular layout */
+html[data-theme="theme-minimal"] .scoreboard{
+  border:none;
+  overflow:visible;
+  margin-top:34px;
+}
+
+html[data-theme="theme-minimal"] .scoreboard-inner{
+  gap:32px;
+}
+
+html[data-theme="theme-minimal"] .slot{
+  aspect-ratio:1/1.18;
+  padding:0 0 18px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+}
+
+html[data-theme="theme-minimal"] .slot svg.ring{
+  position:absolute;
+  top:0;
+  left:50%;
+  width:min(100%,220px);
+  aspect-ratio:1/1;
+  transform:translateX(-50%) rotate(-55deg);
+  overflow:visible;
+}
+
+html[data-theme="theme-minimal"] .slot .ring-bg{
+  fill:none;
+  stroke:rgba(0,0,0,0.04);
+  stroke-width:4;
+}
+
+html[data-theme="theme-minimal"] .slot .ring-progress{
+  fill:none;
+  stroke:#c1121f;
+  stroke-width:4;
+  stroke-linecap:round;
+  stroke-dasharray:263.89;
+  stroke-dashoffset:263.89;
+  transition:stroke-dashoffset .6s linear;
+}
+
+html[data-theme="theme-minimal"] .slot::after{
+  content:"";
+  position:absolute;
+  top:10px;
+  left:50%;
+  width:min(calc(100% - 20px), 200px);
+  aspect-ratio:1/1;
+  transform:translateX(-50%);
+  border-radius:50%;
+  border:8px solid rgba(0,0,0,0.04);
+}
+
+html[data-theme="theme-minimal"] .digit{
+  font-weight:300;
+  font-size:clamp(3rem, 5.8vw, 4.35rem);
+  letter-spacing:-2px;
+  color:#101010;
+  margin-top:8px;
+}
+
+html[data-theme="theme-minimal"] .tag{
+  margin-top:18px;
+  color:rgba(0,0,0,0.62);
+  font-size:clamp(0.95rem, 1.8vw, 1.2rem);
+  font-weight:300;
+  letter-spacing:0;
+  text-transform:lowercase;
+}
+
+/* Mobile */
 @media (max-width: 768px){
   body{
     align-items:flex-start;
@@ -159,7 +324,15 @@ h1{
 
   .container{
     width:min(100%,94vw);
-    padding:28px 10px 36px;
+    padding:58px 10px 36px;
+  }
+
+  .theme-toggle{
+    top:0;
+    right:2px;
+    min-width:112px;
+    padding:9px 12px;
+    font-size:0.8rem;
   }
 
   .quote{
@@ -193,11 +366,38 @@ h1{
     font-size:0.72rem;
     letter-spacing:1.5px;
   }
+
+  html[data-theme="theme-minimal"] .scoreboard-inner{
+    gap:18px;
+  }
+
+  html[data-theme="theme-minimal"] .slot{
+    aspect-ratio:1/1.12;
+    padding:0 0 14px;
+  }
+
+  html[data-theme="theme-minimal"] .digit{
+    font-size:clamp(2.4rem, 10vw, 3.4rem);
+  }
+
+  html[data-theme="theme-minimal"] .tag{
+    font-size:clamp(0.9rem, 3.3vw, 1.05rem);
+  }
+
+  html[data-theme="theme-minimal"] .slot svg.ring{
+    width:min(100%,180px);
+  }
+
+  html[data-theme="theme-minimal"] .slot::after{
+    top:8px;
+    width:min(calc(100% - 16px), 164px);
+    border-width:6px;
+  }
 }
 
 @media (max-width: 420px){
   .container{
-    padding:22px 8px 28px;
+    padding:58px 8px 28px;
   }
 
   .quote{
@@ -213,25 +413,29 @@ h1{
     font-size:0.88rem;
   }
 
-  .scoreboard{
-    border-radius:18px;
-  }
-
   .scoreboard-inner{
     grid-template-columns:1fr 1fr;
   }
 
-  .slot{
-    padding:16px 8px;
+  html[data-theme="theme-minimal"] .scoreboard-inner{
+    gap:14px;
   }
 
-  .digit{
-    font-size:clamp(1.9rem, 12vw, 2.6rem);
+  html[data-theme="theme-minimal"] .slot svg.ring{
+    width:min(100%,150px);
   }
 
-  .tag{
-    font-size:0.68rem;
-    letter-spacing:1.2px;
+  html[data-theme="theme-minimal"] .slot::after{
+    top:7px;
+    width:min(calc(100% - 14px), 136px);
+  }
+
+  html[data-theme="theme-minimal"] .digit{
+    font-size:clamp(2.15rem, 12vw, 2.9rem);
+  }
+
+  html[data-theme="theme-minimal"] .tag{
+    font-size:0.9rem;
   }
 }
 </style>
@@ -240,6 +444,8 @@ h1{
 <body>
 
 <div class="container">
+
+<button class="theme-toggle" id="themeToggle" type="button">Theme: Dark</button>
 
 <div class="quote">
 اللَّهُمَّ إِنِّي قَدْ ارْتَكَبْتُ ذُنُوبًا عَظِيمَةً<br>
@@ -255,31 +461,47 @@ Start Date and Time (Manchester, UK):<br>
 </div>
 
 <div class="now-list">
-<div id="nowManchester">Manchester, UK: <strong>--:--:--</strong></div>
-<div id="nowJeddah">Jeddah, Saudi Arabia: <strong>--:--:--</strong></div>
-<div id="nowHyderabad">Hyderabad, India: <strong>--:--:--</strong></div>
+<div id="nowManchester">Manchester, UK: <strong>--</strong></div>
+<div id="nowJeddah">Jeddah, Saudi Arabia: <strong>--</strong></div>
+<div id="nowHyderabad">Hyderabad, India: <strong>--</strong></div>
 </div>
 </div>
 
 <div class="scoreboard">
 <div class="scoreboard-inner">
 
-<div class="slot">
+<div class="slot" data-unit="days">
+<svg class="ring" viewBox="0 0 100 100" aria-hidden="true">
+<circle class="ring-bg" cx="50" cy="50" r="42"></circle>
+<circle class="ring-progress" cx="50" cy="50" r="42"></circle>
+</svg>
 <div class="digit" id="days">0</div>
 <div class="tag">Days</div>
 </div>
 
-<div class="slot">
+<div class="slot" data-unit="hours">
+<svg class="ring" viewBox="0 0 100 100" aria-hidden="true">
+<circle class="ring-bg" cx="50" cy="50" r="42"></circle>
+<circle class="ring-progress" cx="50" cy="50" r="42"></circle>
+</svg>
 <div class="digit" id="hours">0</div>
 <div class="tag">Hours</div>
 </div>
 
-<div class="slot">
+<div class="slot" data-unit="minutes">
+<svg class="ring" viewBox="0 0 100 100" aria-hidden="true">
+<circle class="ring-bg" cx="50" cy="50" r="42"></circle>
+<circle class="ring-progress" cx="50" cy="50" r="42"></circle>
+</svg>
 <div class="digit" id="minutes">0</div>
 <div class="tag">Minutes</div>
 </div>
 
-<div class="slot">
+<div class="slot" data-unit="seconds">
+<svg class="ring" viewBox="0 0 100 100" aria-hidden="true">
+<circle class="ring-bg" cx="50" cy="50" r="42"></circle>
+<circle class="ring-progress" cx="50" cy="50" r="42"></circle>
+</svg>
 <div class="digit" id="seconds">0</div>
 <div class="tag">Seconds</div>
 </div>
@@ -291,33 +513,97 @@ Start Date and Time (Manchester, UK):<br>
 
 <script>
 const startTime = Date.UTC(2026,2,20,16,23,0);
+const CIRCUMFERENCE = 2 * Math.PI * 42;
 
-function updateClock(id, tz){
-  const now = new Date().toLocaleTimeString("en-GB",{timeZone:tz});
-  document.getElementById(id).innerHTML =
-    document.getElementById(id).innerHTML.split(":")[0] +
-    ": <strong>"+now+"</strong>";
+const themes = [
+  { key: "theme-dark", label: "Dark" },
+  { key: "theme-minimal", label: "Minimal" }
+];
+
+const themeToggle = document.getElementById("themeToggle");
+const root = document.documentElement;
+const savedTheme = localStorage.getItem("countTheme");
+
+function setTheme(themeKey){
+  const theme = themes.find(t => t.key === themeKey) || themes[0];
+  root.setAttribute("data-theme", theme.key);
+  themeToggle.textContent = "Theme: " + theme.label;
+  localStorage.setItem("countTheme", theme.key);
+}
+
+function cycleTheme(){
+  const currentTheme = root.getAttribute("data-theme");
+  const currentIndex = themes.findIndex(t => t.key === currentTheme);
+  const nextIndex = (currentIndex + 1) % themes.length;
+  setTheme(themes[nextIndex].key);
+}
+
+setTheme(savedTheme || "theme-dark");
+themeToggle.addEventListener("click", cycleTheme);
+
+function updateClock(id, label, tz){
+  const now = new Date();
+  const dateText = now.toLocaleDateString("en-GB", {
+    timeZone: tz,
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric"
+  });
+  const timeText = now.toLocaleTimeString("en-GB", {
+    timeZone: tz,
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit"
+  });
+
+  document.getElementById(id).innerHTML = `${label}: <strong>${dateText}, ${timeText}</strong>`;
+}
+
+function setRingProgress(unit, fraction){
+  const slot = document.querySelector(`.slot[data-unit="${unit}"]`);
+  if(!slot) return;
+  const ring = slot.querySelector(".ring-progress");
+  if(!ring) return;
+
+  const clamped = Math.max(0, Math.min(1, fraction));
+  ring.style.strokeDasharray = CIRCUMFERENCE;
+  ring.style.strokeDashoffset = CIRCUMFERENCE * (1 - clamped);
 }
 
 function updateTimer(){
   const diff = Date.now() - startTime;
-  const s = Math.floor(diff/1000);
+  const s = Math.floor(diff / 1000);
 
-  document.getElementById("days").textContent = Math.floor(s/86400);
-  document.getElementById("hours").textContent = Math.floor((s%86400)/3600);
-  document.getElementById("minutes").textContent = Math.floor((s%3600)/60);
-  document.getElementById("seconds").textContent = s%60;
+  const totalDays = Math.floor(s / 86400);
+  const hours = Math.floor((s % 86400) / 3600);
+  const minutes = Math.floor((s % 3600) / 60);
+  const seconds = s % 60;
+
+  document.getElementById("days").textContent = totalDays;
+  document.getElementById("hours").textContent = hours;
+  document.getElementById("minutes").textContent = minutes;
+  document.getElementById("seconds").textContent = seconds;
+
+  const daysProgress = (totalDays % 365) / 365;
+  const hoursProgress = hours / 24;
+  const minutesProgress = minutes / 60;
+  const secondsProgress = seconds / 60;
+
+  setRingProgress("days", daysProgress);
+  setRingProgress("hours", hoursProgress);
+  setRingProgress("minutes", minutesProgress);
+  setRingProgress("seconds", secondsProgress);
 }
 
 function tick(){
-  updateClock("nowManchester","Europe/London");
-  updateClock("nowJeddah","Asia/Riyadh");
-  updateClock("nowHyderabad","Asia/Kolkata");
+  updateClock("nowManchester", "Manchester, UK", "Europe/London");
+  updateClock("nowJeddah", "Jeddah, Saudi Arabia", "Asia/Riyadh");
+  updateClock("nowHyderabad", "Hyderabad, India", "Asia/Kolkata");
   updateTimer();
 }
 
 tick();
-setInterval(tick,1000);
+setInterval(tick, 1000);
 </script>
 
 </body>
