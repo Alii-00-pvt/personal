@@ -23,6 +23,7 @@
   --panelBorder:rgba(255,255,255,0.12);
 
   --edge:rgba(255,255,255,0.16);
+  --shine:rgba(255,255,255,0.06);
 
   --quoteColor:var(--muted);
   --titleFont:"Caveat",cursive;
@@ -32,14 +33,18 @@
   --themeBtnBg:rgba(255,255,255,0.08);
   --themeBtnBorder:rgba(255,255,255,0.18);
   --themeBtnText:rgba(255,255,255,0.9);
+
+  --digitGlow:none;
 }
 
+/* DARK */
 html[data-theme="theme-dark"]{
   --bgTop:#0d0d0f;
   --bgMid:#0a0a0c;
   --bgBottom:#060607;
 }
 
+/* MINIMAL */
 html[data-theme="theme-minimal"]{
   --bgTop:#efefef;
   --bgMid:#ebebeb;
@@ -51,6 +56,7 @@ html[data-theme="theme-minimal"]{
 
   --panel:rgba(255,255,255,0.42);
   --panelBorder:rgba(0,0,0,0.05);
+
   --edge:transparent;
 
   --quoteColor:rgba(0,0,0,0.62);
@@ -77,7 +83,8 @@ body{
   background:linear-gradient(180deg,var(--bgTop),var(--bgMid),var(--bgBottom));
   color:var(--text);
   text-align:center;
-  font-family:"Inter",system-ui;
+  overflow-y:auto;
+  font-family:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
   padding:24px 0;
 }
 
