@@ -38,20 +38,6 @@ html[data-theme="theme-dark"]{
   --bgTop:#0d0d0f;
   --bgMid:#0a0a0c;
   --bgBottom:#060607;
-
-  --text:rgba(255,255,255,0.92);
-  --muted:rgba(255,255,255,0.70);
-  --muted2:rgba(255,255,255,0.52);
-
-  --panel:rgba(255,255,255,0.055);
-  --panelBorder:rgba(255,255,255,0.12);
-  --edge:rgba(255,255,255,0.16);
-
-  --quoteColor:var(--muted);
-
-  --themeBtnBg:rgba(255,255,255,0.08);
-  --themeBtnBorder:rgba(255,255,255,0.18);
-  --themeBtnText:rgba(255,255,255,0.9);
 }
 
 html[data-theme="theme-minimal"]{
@@ -74,9 +60,7 @@ html[data-theme="theme-minimal"]{
   --themeBtnText:rgba(0,0,0,0.86);
 }
 
-*{
-  box-sizing:border-box;
-}
+*{box-sizing:border-box;}
 
 html, body{
   width:100%;
@@ -93,336 +77,97 @@ body{
   background:linear-gradient(180deg,var(--bgTop),var(--bgMid),var(--bgBottom));
   color:var(--text);
   text-align:center;
-  overflow-y:auto;
-  font-family:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  font-family:"Inter",system-ui;
   padding:24px 0;
-  transition:background .35s ease,color .35s ease;
 }
 
 .container{
   width:min(980px,94vw);
   padding:44px 18px 52px;
   position:relative;
-  z-index:1;
 }
 
 .theme-toggle{
   position:absolute;
   top:8px;
   right:0;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  min-width:124px;
   padding:10px 14px;
   border-radius:999px;
   border:1px solid var(--themeBtnBorder);
   background:var(--themeBtnBg);
   color:var(--themeBtnText);
-  font:600 0.86rem "Inter",system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-  letter-spacing:.3px;
   cursor:pointer;
-  backdrop-filter:blur(10px);
-  -webkit-backdrop-filter:blur(10px);
-  transition:all .25s ease;
 }
 
 .quote{
-  margin:0 auto 22px;
-  max-width:760px;
-  font-size:1.2rem;
-  color:var(--quoteColor);
-  line-height:1.8;
+  margin-bottom:20px;
   direction:rtl;
-  unicode-bidi:plaintext;
 }
 
 h1{
-  margin:0 0 12px;
-  font-family:var(--titleFont);
-  font-weight:700;
-  font-size:clamp(2.4rem, 7vw, 3.1rem);
-  line-height:1.05;
+  font-family:"Caveat",cursive;
 }
 
 .start-card{
-  margin:0 auto 16px;
-  width:min(720px,92vw);
+  margin:20px auto;
   padding:16px;
   border-radius:18px;
   background:var(--panel);
   border:1px solid var(--panelBorder);
-  backdrop-filter:blur(10px);
-  -webkit-backdrop-filter:blur(10px);
-}
-
-.start{
-  font-size:0.95rem;
-  color:var(--muted);
-  line-height:1.45;
-  text-align:center;
-}
-
-.start strong{
-  color:var(--text);
-  word-break:break-word;
 }
 
 .now-list{
-  margin-top:12px;
-  display:grid;
-  gap:7px;
-  font-size:0.92rem;
-  line-height:1.45;
-  text-align:center;
-}
-
-.scoreboard{
-  margin-top:24px;
-  border-radius:22px;
-  border:1px solid var(--edge);
-  overflow:hidden;
+  margin-top:10px;
 }
 
 .scoreboard-inner{
   display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));
-  gap:0;
-}
-
-.slot{
-  padding:22px 14px;
-  min-width:0;
-  position:relative;
-}
-
-.digit{
-  font-size:clamp(2.2rem, 6vw, 3rem);
-  font-weight:800;
-  line-height:1;
-  overflow-wrap:anywhere;
-  font-family:var(--digitFont);
-  position:relative;
-  z-index:2;
-}
-
-.tag{
-  margin-top:10px;
-  font-size:0.75rem;
-  letter-spacing:2px;
-  color:var(--muted2);
-  font-family:var(--tagFont);
-  position:relative;
-  z-index:2;
-}
-
-/* Hide rings by default */
-.slot svg.ring{
-  display:none;
-}
-
-.slot::after{
-  content:none;
-}
-
-/* Minimal theme circular layout only */
-html[data-theme="theme-minimal"] .scoreboard{
-  border:none;
-  overflow:visible;
-  margin-top:28px;
-}
-
-html[data-theme="theme-minimal"] .scoreboard-inner{
+  grid-template-columns:repeat(4,1fr);
   gap:20px;
 }
 
-html[data-theme="theme-minimal"] .slot{
-  aspect-ratio:1/1.08;
-  padding:0 0 14px;
+.slot{
+  position:relative;
   display:flex;
   flex-direction:column;
   align-items:center;
-  justify-content:center;
 }
 
-html[data-theme="theme-minimal"] .slot svg.ring{
+/* hide rings in dark */
+.slot svg{display:none;}
+
+/* minimal rings */
+html[data-theme="theme-minimal"] .slot svg{
   display:block;
   position:absolute;
-  top:0;
-  left:50%;
-  width:min(100%,200px);
-  aspect-ratio:1/1;
-  transform:translateX(-50%) rotate(-55deg);
-  overflow:visible;
+  width:180px;
+  transform:rotate(-55deg);
 }
 
-html[data-theme="theme-minimal"] .slot .ring-bg{
+.ring-bg{
   fill:none;
-  stroke:rgba(0,0,0,0.04);
+  stroke:rgba(0,0,0,0.05);
   stroke-width:4;
 }
 
-html[data-theme="theme-minimal"] .slot .ring-progress{
+.ring-progress{
   fill:none;
   stroke:#c1121f;
   stroke-width:4;
   stroke-linecap:round;
   stroke-dasharray:263.89;
   stroke-dashoffset:263.89;
-  transition:stroke-dashoffset .6s linear;
 }
 
-html[data-theme="theme-minimal"] .slot::after{
-  content:"";
-  position:absolute;
-  top:10px;
-  left:50%;
-  width:min(calc(100% - 20px), 182px);
-  aspect-ratio:1/1;
-  transform:translateX(-50%);
-  border-radius:50%;
-  border:8px solid rgba(0,0,0,0.04);
+.digit{
+  font-size:3rem;
+  font-weight:700;
+  z-index:1;
 }
 
-html[data-theme="theme-minimal"] .digit{
-  font-weight:300;
-  font-size:clamp(3rem, 5.3vw, 4rem);
-  letter-spacing:-2px;
-  color:#101010;
-  margin-top:0;
-}
-
-html[data-theme="theme-minimal"] .tag{
-  margin-top:16px;
-  color:rgba(0,0,0,0.62);
-  font-size:clamp(0.95rem, 1.6vw, 1.15rem);
-  font-weight:300;
-  letter-spacing:0;
-  text-transform:lowercase;
-}
-
-/* Mobile */
-@media (max-width: 768px){
-  body{
-    align-items:flex-start;
-    padding:18px 0 28px;
-  }
-
-  .container{
-    width:min(100%,94vw);
-    padding:58px 10px 36px;
-  }
-
-  .theme-toggle{
-    top:0;
-    right:2px;
-    min-width:112px;
-    padding:9px 12px;
-    font-size:0.8rem;
-  }
-
-  .quote{
-    font-size:1rem;
-    line-height:1.9;
-    margin-bottom:18px;
-  }
-
-  .start-card{
-    padding:14px 12px;
-    border-radius:16px;
-  }
-
-  .now-list{
-    font-size:0.9rem;
-  }
-
-  .scoreboard-inner{
-    grid-template-columns:repeat(2,minmax(0,1fr));
-  }
-
-  .slot{
-    padding:18px 10px;
-  }
-
-  .digit{
-    font-size:clamp(2rem, 10vw, 3rem);
-  }
-
-  .tag{
-    font-size:0.72rem;
-    letter-spacing:1.5px;
-  }
-
-  html[data-theme="theme-minimal"] .scoreboard-inner{
-    gap:16px;
-  }
-
-  html[data-theme="theme-minimal"] .slot{
-    aspect-ratio:1/1.08;
-    padding:0 0 12px;
-  }
-
-  html[data-theme="theme-minimal"] .digit{
-    font-size:clamp(2.3rem, 10vw, 3.2rem);
-  }
-
-  html[data-theme="theme-minimal"] .tag{
-    font-size:clamp(0.9rem, 3.3vw, 1rem);
-  }
-
-  html[data-theme="theme-minimal"] .slot svg.ring{
-    width:min(100%,170px);
-  }
-
-  html[data-theme="theme-minimal"] .slot::after{
-    top:8px;
-    width:min(calc(100% - 16px), 154px);
-    border-width:6px;
-  }
-}
-
-@media (max-width: 420px){
-  .container{
-    padding:58px 8px 28px;
-  }
-
-  .quote{
-    font-size:0.92rem;
-    line-height:1.85;
-  }
-
-  .start{
-    font-size:0.9rem;
-  }
-
-  .now-list{
-    font-size:0.88rem;
-  }
-
-  .scoreboard-inner{
-    grid-template-columns:1fr 1fr;
-  }
-
-  html[data-theme="theme-minimal"] .scoreboard-inner{
-    gap:12px;
-  }
-
-  html[data-theme="theme-minimal"] .slot svg.ring{
-    width:min(100%,145px);
-  }
-
-  html[data-theme="theme-minimal"] .slot::after{
-    top:7px;
-    width:min(calc(100% - 14px), 131px);
-  }
-
-  html[data-theme="theme-minimal"] .digit{
-    font-size:clamp(2.05rem, 12vw, 2.8rem);
-  }
-
-  html[data-theme="theme-minimal"] .tag{
-    font-size:0.88rem;
-  }
+.tag{
+  margin-top:10px;
+  z-index:1;
 }
 </style>
 </head>
@@ -431,7 +176,7 @@ html[data-theme="theme-minimal"] .tag{
 
 <div class="container">
 
-<button class="theme-toggle" id="themeToggle" type="button">Theme: Dark</button>
+<button class="theme-toggle" id="themeToggle">Theme: Dark</button>
 
 <div class="quote">
 اللَّهُمَّ إِنِّي قَدْ ارْتَكَبْتُ ذُنُوبًا عَظِيمَةً<br>
@@ -441,155 +186,104 @@ html[data-theme="theme-minimal"] .tag{
 <h1>The Count</h1>
 
 <div class="start-card">
-<div class="start">
 Start Date and Time (Manchester, UK):<br>
-<strong>20 March 2026, 16:23 (GMT)</strong>
-</div>
+<strong>25 March 2026, 18:04 (GMT)</strong>
 
 <div class="now-list">
-<div id="nowManchester">Manchester, UK: <strong>--</strong></div>
-<div id="nowJeddah">Jeddah, Saudi Arabia: <strong>--</strong></div>
-<div id="nowHyderabad">Hyderabad, India: <strong>--</strong></div>
+<div id="nowManchester"></div>
+<div id="nowJeddah"></div>
+<div id="nowHyderabad"></div>
 </div>
 </div>
 
-<div class="scoreboard">
 <div class="scoreboard-inner">
-
 <div class="slot" data-unit="days">
-<svg class="ring" viewBox="0 0 100 100" aria-hidden="true">
-<circle class="ring-bg" cx="50" cy="50" r="42"></circle>
-<circle class="ring-progress" cx="50" cy="50" r="42"></circle>
-</svg>
-<div class="digit" id="days">0</div>
-<div class="tag">Days</div>
-</div>
+<svg viewBox="0 0 100 100"><circle class="ring-bg" cx="50" cy="50" r="42"/><circle class="ring-progress" cx="50" cy="50" r="42"/></svg>
+<div id="days" class="digit"></div><div class="tag">Days</div></div>
 
 <div class="slot" data-unit="hours">
-<svg class="ring" viewBox="0 0 100 100" aria-hidden="true">
-<circle class="ring-bg" cx="50" cy="50" r="42"></circle>
-<circle class="ring-progress" cx="50" cy="50" r="42"></circle>
-</svg>
-<div class="digit" id="hours">0</div>
-<div class="tag">Hours</div>
-</div>
+<svg viewBox="0 0 100 100"><circle class="ring-bg" cx="50" cy="50" r="42"/><circle class="ring-progress" cx="50" cy="50" r="42"/></svg>
+<div id="hours" class="digit"></div><div class="tag">Hours</div></div>
 
 <div class="slot" data-unit="minutes">
-<svg class="ring" viewBox="0 0 100 100" aria-hidden="true">
-<circle class="ring-bg" cx="50" cy="50" r="42"></circle>
-<circle class="ring-progress" cx="50" cy="50" r="42"></circle>
-</svg>
-<div class="digit" id="minutes">0</div>
-<div class="tag">Minutes</div>
-</div>
+<svg viewBox="0 0 100 100"><circle class="ring-bg" cx="50" cy="50" r="42"/><circle class="ring-progress" cx="50" cy="50" r="42"/></svg>
+<div id="minutes" class="digit"></div><div class="tag">Minutes</div></div>
 
 <div class="slot" data-unit="seconds">
-<svg class="ring" viewBox="0 0 100 100" aria-hidden="true">
-<circle class="ring-bg" cx="50" cy="50" r="42"></circle>
-<circle class="ring-progress" cx="50" cy="50" r="42"></circle>
-</svg>
-<div class="digit" id="seconds">0</div>
-<div class="tag">Seconds</div>
-</div>
-
-</div>
+<svg viewBox="0 0 100 100"><circle class="ring-bg" cx="50" cy="50" r="42"/><circle class="ring-progress" cx="50" cy="50" r="42"/></svg>
+<div id="seconds" class="digit"></div><div class="tag">Seconds</div></div>
 </div>
 
 </div>
 
 <script>
-const startTime = Date.UTC(2026,2,20,16,23,0);
-const CIRCUMFERENCE = 2 * Math.PI * 42;
+const startTime = Date.UTC(2026,2,25,18,4,0);
+const CIRCUMFERENCE = 2*Math.PI*42;
 
-const themes = [
-  { key: "theme-dark", label: "Dark" },
-  { key: "theme-minimal", label: "Minimal" }
+const themes=[
+{key:"theme-dark",label:"Dark"},
+{key:"theme-minimal",label:"Minimal"}
 ];
 
-const themeToggle = document.getElementById("themeToggle");
-const root = document.documentElement;
-const savedTheme = localStorage.getItem("countTheme");
+const btn=document.getElementById("themeToggle");
+const root=document.documentElement;
 
-function setTheme(themeKey){
-  const theme = themes.find(t => t.key === themeKey) || themes[0];
-  root.setAttribute("data-theme", theme.key);
-  themeToggle.textContent = "Theme: " + theme.label;
-  localStorage.setItem("countTheme", theme.key);
+function setTheme(t){
+root.setAttribute("data-theme",t.key);
+btn.textContent="Theme: "+t.label;
+localStorage.setItem("countTheme",t.key);
 }
 
-function cycleTheme(){
-  const currentTheme = root.getAttribute("data-theme");
-  const currentIndex = themes.findIndex(t => t.key === currentTheme);
-  const nextIndex = (currentIndex + 1) % themes.length;
-  setTheme(themes[nextIndex].key);
+btn.onclick=()=>{
+let i=themes.findIndex(x=>x.key===root.getAttribute("data-theme"));
+i=(i+1)%themes.length;
+setTheme(themes[i]);
+};
+
+setTheme(themes.find(t=>t.key===localStorage.getItem("countTheme"))||themes[0]);
+
+function updateClock(id,label,tz){
+const now=new Date();
+const date=now.toLocaleDateString("en-GB",{timeZone:tz});
+const time=now.toLocaleTimeString("en-GB",{timeZone:tz});
+document.getElementById(id).innerHTML=`${label}: <strong>${date}, ${time}</strong>`;
 }
 
-setTheme(savedTheme || "theme-dark");
-themeToggle.addEventListener("click", cycleTheme);
-
-function updateClock(id, label, tz){
-  const now = new Date();
-  const dateText = now.toLocaleDateString("en-GB", {
-    timeZone: tz,
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric"
-  });
-  const timeText = now.toLocaleTimeString("en-GB", {
-    timeZone: tz,
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit"
-  });
-
-  document.getElementById(id).innerHTML = `${label}: <strong>${dateText}, ${timeText}</strong>`;
-}
-
-function setRingProgress(unit, fraction){
-  const slot = document.querySelector(`.slot[data-unit="${unit}"]`);
-  if(!slot) return;
-  const ring = slot.querySelector(".ring-progress");
-  if(!ring) return;
-
-  const clamped = Math.max(0, Math.min(1, fraction));
-  ring.style.strokeDasharray = CIRCUMFERENCE;
-  ring.style.strokeDashoffset = CIRCUMFERENCE * (1 - clamped);
+function setRing(unit,f){
+const el=document.querySelector(`[data-unit="${unit}"] .ring-progress`);
+if(!el)return;
+el.style.strokeDashoffset=CIRCUMFERENCE*(1-f);
 }
 
 function updateTimer(){
-  const diff = Date.now() - startTime;
-  const s = Math.floor(diff / 1000);
+const diff=Date.now()-startTime;
+const s=Math.floor(diff/1000);
 
-  const totalDays = Math.floor(s / 86400);
-  const hours = Math.floor((s % 86400) / 3600);
-  const minutes = Math.floor((s % 3600) / 60);
-  const seconds = s % 60;
+const d=Math.floor(s/86400);
+const h=Math.floor((s%86400)/3600);
+const m=Math.floor((s%3600)/60);
+const sec=s%60;
 
-  document.getElementById("days").textContent = totalDays;
-  document.getElementById("hours").textContent = hours;
-  document.getElementById("minutes").textContent = minutes;
-  document.getElementById("seconds").textContent = seconds;
+days.textContent=d;
+hours.textContent=h;
+minutes.textContent=m;
+seconds.textContent=sec;
 
-  const daysProgress = (totalDays % 365) / 365;
-  const hoursProgress = hours / 24;
-  const minutesProgress = minutes / 60;
-  const secondsProgress = seconds / 60;
-
-  setRingProgress("days", daysProgress);
-  setRingProgress("hours", hoursProgress);
-  setRingProgress("minutes", minutesProgress);
-  setRingProgress("seconds", secondsProgress);
+setRing("days",(d%365)/365);
+setRing("hours",h/24);
+setRing("minutes",m/60);
+setRing("seconds",sec/60);
 }
 
 function tick(){
-  updateClock("nowManchester", "Manchester, UK", "Europe/London");
-  updateClock("nowJeddah", "Jeddah, Saudi Arabia", "Asia/Riyadh");
-  updateClock("nowHyderabad", "Hyderabad, India", "Asia/Kolkata");
-  updateTimer();
+updateClock("nowManchester","Manchester, UK","Europe/London");
+updateClock("nowJeddah","Jeddah, Saudi Arabia","Asia/Riyadh");
+updateClock("nowHyderabad","Hyderabad, India","Asia/Kolkata");
+updateTimer();
 }
 
 tick();
-setInterval(tick, 1000);
+setInterval(tick,1000);
 </script>
 
 </body>
