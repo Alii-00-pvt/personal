@@ -1,664 +1,596 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="theme-dark">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>World Clock</title>
-  <style>
-    :root {
-      --page-bg: #f4f4f4;
-      --panel-bg: #ffffff;
-      --card-bg: #f7f7f7;
-      --text: #171717;
-      --muted: #666666;
-      --soft-muted: #9a9a9a;
-      --border: #e5e5e5;
-      --shadow: 0 18px 45px rgba(0, 0, 0, 0.08);
-      --red: #d0121b;
-      --red-soft: rgba(208, 18, 27, 0.12);
-      --ring-bg: #e9e9e9;
-    }
+<meta charset="UTF-8">
+<title>The Count</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-    body {
-      min-height: 100vh;
-      background:
-        radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.95), transparent 34%),
-        radial-gradient(circle at 80% 10%, rgba(255, 255, 255, 0.9), transparent 30%),
-        var(--page-bg);
-      color: var(--text);
-      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
-      display: flex;
-      justify-content: center;
-      padding: 30px 16px 56px;
-    }
+<style>
+:root{
+  --bgTop:#0d0d0f;
+  --bgMid:#0a0a0c;
+  --bgBottom:#060607;
 
-    .app {
-      width: min(1180px, 100%);
-    }
+  --text:rgba(255,255,255,0.92);
+  --muted:rgba(255,255,255,0.70);
+  --muted2:rgba(255,255,255,0.52);
 
-    header {
-      width: min(760px, 100%);
-      margin: 0 auto 38px;
-      padding: 28px 34px;
-      text-align: center;
-      background: rgba(255, 255, 255, 0.82);
-      border: 1px solid rgba(255, 255, 255, 0.9);
-      border-radius: 18px;
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(14px);
-    }
+  --panel:rgba(255,255,255,0.055);
+  --panelBorder:rgba(255,255,255,0.12);
 
-    .date-line {
-      color: var(--muted);
-      font-size: clamp(18px, 2.2vw, 27px);
-      font-weight: 400;
-      letter-spacing: 0.2px;
-      margin-bottom: 5px;
-      text-transform: none;
-    }
+  --edge:rgba(255,255,255,0.16);
 
-    .main-clock {
-      color: var(--text);
-      font-size: clamp(26px, 4vw, 42px);
-      line-height: 1.2;
-      font-weight: 800;
-      letter-spacing: -0.5px;
-      text-shadow: none;
-      margin-top: 6px;
-    }
+  --quoteColor:var(--muted);
+  --titleFont:"Caveat",cursive;
+  --digitFont:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --tagFont:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
 
-    .main-clock span.dim {
-      color: var(--text);
-    }
+  --themeBtnBg:rgba(255,255,255,0.08);
+  --themeBtnBorder:rgba(255,255,255,0.18);
+  --themeBtnText:rgba(255,255,255,0.9);
+}
 
-    .subline {
-      margin-top: 22px;
-      color: var(--text);
-      font-size: clamp(17px, 2vw, 25px);
-      font-weight: 500;
-      letter-spacing: 0.1px;
-      text-transform: none;
-    }
+html[data-theme="theme-dark"]{
+  --bgTop:#0d0d0f;
+  --bgMid:#0a0a0c;
+  --bgBottom:#060607;
 
-    .controls {
-      width: min(760px, 100%);
-      margin: 0 auto 16px;
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 12px;
-      background: rgba(255, 255, 255, 0.82);
-      border: 1px solid rgba(255, 255, 255, 0.9);
-      border-radius: 18px;
-      padding: 14px;
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(14px);
-    }
+  --text:rgba(255,255,255,0.92);
+  --muted:rgba(255,255,255,0.70);
+  --muted2:rgba(255,255,255,0.52);
 
-    input, button {
-      min-height: 48px;
-      background: #ffffff;
-      border: 1px solid var(--border);
-      color: var(--text);
-      font-family: inherit;
-      border-radius: 12px;
-      padding: 12px 14px;
-      outline: none;
-      font-size: 15px;
-    }
+  --panel:rgba(255,255,255,0.055);
+  --panelBorder:rgba(255,255,255,0.12);
+  --edge:rgba(255,255,255,0.16);
 
-    input::placeholder {
-      color: var(--soft-muted);
-    }
+  --quoteColor:var(--muted);
 
-    input:focus {
-      border-color: var(--red);
-      box-shadow: 0 0 0 4px var(--red-soft);
-    }
+  --themeBtnBg:rgba(255,255,255,0.08);
+  --themeBtnBorder:rgba(255,255,255,0.18);
+  --themeBtnText:rgba(255,255,255,0.9);
+}
 
-    button {
-      cursor: pointer;
-      transition: 0.2s ease;
-      background: var(--text);
-      color: #ffffff;
-      font-weight: 700;
-      white-space: nowrap;
-    }
+html[data-theme="theme-minimal"]{
+  --bgTop:#efefef;
+  --bgMid:#ebebeb;
+  --bgBottom:#e8e8e8;
 
-    button:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
-    }
+  --text:rgba(10,10,10,0.94);
+  --muted:rgba(0,0,0,0.64);
+  --muted2:rgba(0,0,0,0.50);
 
-    .message {
-      min-height: 20px;
-      color: var(--muted);
-      font-size: 13px;
-      text-align: center;
-      letter-spacing: 0.1px;
-      margin-bottom: 34px;
-    }
+  --panel:rgba(255,255,255,0.42);
+  --panelBorder:rgba(0,0,0,0.05);
+  --edge:transparent;
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(245px, 1fr));
-      gap: 28px;
-      align-items: stretch;
-    }
+  --quoteColor:rgba(0,0,0,0.62);
 
-    .clock-card {
-      min-height: 310px;
-      background: transparent;
-      border: 0;
-      border-radius: 22px;
-      padding: 0;
-      position: relative;
-      overflow: visible;
-      cursor: grab;
-    }
+  --themeBtnBg:rgba(255,255,255,0.68);
+  --themeBtnBorder:rgba(0,0,0,0.10);
+  --themeBtnText:rgba(0,0,0,0.86);
+}
 
-    .clock-card.dragging {
-      opacity: 0.45;
-    }
+*{
+  box-sizing:border-box;
+}
 
-    .clock-card:active {
-      cursor: grabbing;
-    }
+html, body{
+  width:100%;
+  max-width:100%;
+  overflow-x:hidden;
+}
 
-    .clock-card::before {
-      display: none;
-    }
+body{
+  margin:0;
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:linear-gradient(180deg,var(--bgTop),var(--bgMid),var(--bgBottom));
+  color:var(--text);
+  text-align:center;
+  overflow-y:auto;
+  font-family:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  padding:24px 0;
+  transition:background .35s ease,color .35s ease;
+}
 
-    .city-row {
-      min-height: 78px;
-      display: flex;
-      justify-content: center;
-      gap: 16px;
-      align-items: flex-start;
-      margin-bottom: 12px;
-      text-align: center;
-      position: relative;
-      z-index: 2;
-    }
+.container{
+  width:min(980px,94vw);
+  padding:44px 18px 52px;
+  position:relative;
+  z-index:1;
+}
 
-    .city-row > div:first-child {
-      padding: 0 42px;
-    }
+.theme-toggle{
+  position:absolute;
+  top:8px;
+  right:0;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:124px;
+  padding:10px 14px;
+  border-radius:999px;
+  border:1px solid var(--themeBtnBorder);
+  background:var(--themeBtnBg);
+  color:var(--themeBtnText);
+  font:600 0.86rem "Inter",system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  letter-spacing:.3px;
+  cursor:pointer;
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  transition:all .25s ease;
+}
 
-    .city {
-      color: var(--text);
-      font-size: 20px;
-      line-height: 1.25;
-      font-weight: 600;
-      letter-spacing: 0.1px;
-      text-transform: none;
-    }
+.quote{
+  margin:0 auto 22px;
+  max-width:760px;
+  font-size:1.2rem;
+  color:var(--quoteColor);
+  line-height:1.8;
+  direction:rtl;
+  unicode-bidi:plaintext;
+}
 
-    .country {
-      color: var(--muted);
-      font-size: 14px;
-      margin-top: 4px;
-      font-weight: 400;
-      letter-spacing: 0;
-    }
+h1{
+  margin:0 0 12px;
+  font-family:var(--titleFont);
+  font-weight:700;
+  font-size:clamp(2.4rem, 7vw, 3.1rem);
+  line-height:1.05;
+}
 
-    .zone {
-      display: none;
-    }
+.start-card{
+  margin:0 auto 16px;
+  width:min(720px,92vw);
+  padding:16px;
+  border-radius:18px;
+  background:var(--panel);
+  border:1px solid var(--panelBorder);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+}
 
-    .city-row > div:last-child {
-      position: absolute;
-      top: 0;
-      right: 0;
-      display: flex;
-      gap: 8px;
-      align-items: center;
-    }
+.start{
+  font-size:0.95rem;
+  color:var(--muted);
+  line-height:1.45;
+  text-align:center;
+}
 
-    .drag-handle {
-      width: 34px;
-      height: 34px;
-      border: 1px solid var(--border);
-      background: rgba(255, 255, 255, 0.8);
-      color: var(--muted);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 16px;
-      border-radius: 50%;
-      cursor: grab;
-      user-select: none;
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
-    }
+.start strong{
+  color:var(--text);
+  word-break:break-word;
+}
 
-    .drag-handle:active {
-      cursor: grabbing;
-    }
+.now-list{
+  margin-top:12px;
+  display:grid;
+  gap:7px;
+  font-size:0.92rem;
+  line-height:1.45;
+  text-align:center;
+}
 
-    .delete-btn {
-      min-height: 34px;
-      height: 34px;
-      border: 1px solid var(--border);
-      background: rgba(255, 255, 255, 0.85);
-      color: var(--red);
-      padding: 0 10px;
-      font-size: 11px;
-      border-radius: 999px;
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
-    }
+.scoreboard{
+  margin-top:24px;
+  border-radius:22px;
+  border:1px solid var(--edge);
+  overflow:hidden;
+}
 
-    .delete-btn:hover {
-      color: #ffffff;
-      background: var(--red);
-      border-color: var(--red);
-      transform: translateY(-1px);
-    }
+.scoreboard-inner{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:0;
+}
 
-    .time {
-      width: 220px;
-      height: 220px;
-      margin: 0 auto;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--text);
-      font-size: clamp(30px, 4vw, 44px);
-      font-weight: 400;
-      letter-spacing: -1.5px;
-      position: relative;
-      z-index: 1;
-      /* Pitch black ring with small gap */
-      background:
-        radial-gradient(circle, #ffffff 62%, transparent 63%),
-        conic-gradient(#000000 0deg 345deg, transparent 345deg 360deg);
-      box-shadow:
-        0 10px 22px rgba(0, 0, 0, 0.08);
-    }
+.slot{
+  padding:22px 14px;
+  min-width:0;
+  position:relative;
+}
 
-    .time::after {
-      content: "";
-      position: absolute;
-      inset: 18px;
-      border-radius: 50%;
-      border: 0;
-      pointer-events: none;
-    }
+.digit{
+  font-size:clamp(2.2rem, 6vw, 3rem);
+  font-weight:800;
+  line-height:1;
+  overflow-wrap:anywhere;
+  font-family:var(--digitFont);
+  position:relative;
+  z-index:2;
+}
 
-    .time::after {
-      content: "";
-      position: absolute;
-      inset: 18px;
-      border-radius: 50%;
-      border: 2px solid rgba(230, 230, 230, 0.9);
-      pointer-events: none;
-    }
+.tag{
+  margin-top:10px;
+  font-size:0.75rem;
+  letter-spacing:2px;
+  color:var(--muted2);
+  font-family:var(--tagFont);
+  position:relative;
+  z-index:2;
+}
 
-    .date {
-      color: var(--muted);
-      font-size: 14px;
-      margin-top: 14px;
-      letter-spacing: 0;
-      text-align: center;
-      text-transform: none;
-      position: relative;
-      z-index: 1;
-    }
+/* Hide rings by default */
+.slot svg.ring{
+  display:none;
+}
 
-    .empty {
-      display: none;
-      width: min(760px, 100%);
-      margin: 0 auto;
-      border: 1px dashed var(--border);
-      background: rgba(255, 255, 255, 0.7);
-      border-radius: 18px;
-      padding: 28px;
-      text-align: center;
-      color: var(--muted);
-      letter-spacing: 0.1px;
-      box-shadow: var(--shadow);
-    }
+.slot::after{
+  content:none;
+}
 
-    @media (max-width: 720px) {
-      body {
-        padding: 20px 12px 40px;
-      }
+/* Minimal theme circular layout only */
+html[data-theme="theme-minimal"] .scoreboard{
+  border:none;
+  overflow:visible;
+  margin-top:28px;
+}
 
-      header {
-        padding: 22px 18px;
-      }
+html[data-theme="theme-minimal"] .scoreboard-inner{
+  gap:20px;
+}
 
-      .controls {
-        grid-template-columns: 1fr;
-      }
+html[data-theme="theme-minimal"] .slot{
+  aspect-ratio:1/1.08;
+  padding:0 0 14px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+}
 
-      .grid {
-        gap: 34px;
-      }
+html[data-theme="theme-minimal"] .slot svg.ring{
+  display:block;
+  position:absolute;
+  top:0;
+  left:50%;
+  width:min(100%,200px);
+  aspect-ratio:1/1;
+  transform:translateX(-50%) rotate(-55deg);
+  overflow:visible;
+}
 
-      .clock-card {
-        min-height: 300px;
-      }
+html[data-theme="theme-minimal"] .slot .ring-bg{
+  fill:none;
+  stroke:rgba(0,0,0,0.04);
+  stroke-width:4;
+}
 
-      .time {
-        width: 205px;
-        height: 205px;
-      }
-    }
-  </style>
+html[data-theme="theme-minimal"] .slot .ring-progress{
+  fill:none;
+  stroke:#c1121f;
+  stroke-width:4;
+  stroke-linecap:round;
+  stroke-dasharray:263.89;
+  stroke-dashoffset:263.89;
+  transition:stroke-dashoffset .6s linear;
+}
+
+html[data-theme="theme-minimal"] .slot::after{
+  content:"";
+  position:absolute;
+  top:10px;
+  left:50%;
+  width:min(calc(100% - 20px), 182px);
+  aspect-ratio:1/1;
+  transform:translateX(-50%);
+  border-radius:50%;
+  border:8px solid rgba(0,0,0,0.04);
+}
+
+html[data-theme="theme-minimal"] .digit{
+  font-weight:300;
+  font-size:clamp(3rem, 5.3vw, 4rem);
+  letter-spacing:-2px;
+  color:#101010;
+  margin-top:0;
+}
+
+html[data-theme="theme-minimal"] .tag{
+  margin-top:16px;
+  color:rgba(0,0,0,0.62);
+  font-size:clamp(0.95rem, 1.6vw, 1.15rem);
+  font-weight:300;
+  letter-spacing:0;
+  text-transform:lowercase;
+}
+
+/* Mobile */
+@media (max-width: 768px){
+  body{
+    align-items:flex-start;
+    padding:18px 0 28px;
+  }
+
+  .container{
+    width:min(100%,94vw);
+    padding:58px 10px 36px;
+  }
+
+  .theme-toggle{
+    top:0;
+    right:2px;
+    min-width:112px;
+    padding:9px 12px;
+    font-size:0.8rem;
+  }
+
+  .quote{
+    font-size:1rem;
+    line-height:1.9;
+    margin-bottom:18px;
+  }
+
+  .start-card{
+    padding:14px 12px;
+    border-radius:16px;
+  }
+
+  .now-list{
+    font-size:0.9rem;
+  }
+
+  .scoreboard-inner{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+
+  .slot{
+    padding:18px 10px;
+  }
+
+  .digit{
+    font-size:clamp(2rem, 10vw, 3rem);
+  }
+
+  .tag{
+    font-size:0.72rem;
+    letter-spacing:1.5px;
+  }
+
+  html[data-theme="theme-minimal"] .scoreboard-inner{
+    gap:16px;
+  }
+
+  html[data-theme="theme-minimal"] .slot{
+    aspect-ratio:1/1.08;
+    padding:0 0 12px;
+  }
+
+  html[data-theme="theme-minimal"] .digit{
+    font-size:clamp(2.3rem, 10vw, 3.2rem);
+  }
+
+  html[data-theme="theme-minimal"] .tag{
+    font-size:clamp(0.9rem, 3.3vw, 1rem);
+  }
+
+  html[data-theme="theme-minimal"] .slot svg.ring{
+    width:min(100%,170px);
+  }
+
+  html[data-theme="theme-minimal"] .slot::after{
+    top:8px;
+    width:min(calc(100% - 16px), 154px);
+    border-width:6px;
+  }
+}
+
+@media (max-width: 420px){
+  .container{
+    padding:58px 8px 28px;
+  }
+
+  .quote{
+    font-size:0.92rem;
+    line-height:1.85;
+  }
+
+  .start{
+    font-size:0.9rem;
+  }
+
+  .now-list{
+    font-size:0.88rem;
+  }
+
+  .scoreboard-inner{
+    grid-template-columns:1fr 1fr;
+  }
+
+  html[data-theme="theme-minimal"] .scoreboard-inner{
+    gap:12px;
+  }
+
+  html[data-theme="theme-minimal"] .slot svg.ring{
+    width:min(100%,145px);
+  }
+
+  html[data-theme="theme-minimal"] .slot::after{
+    top:7px;
+    width:min(calc(100% - 14px), 131px);
+  }
+
+  html[data-theme="theme-minimal"] .digit{
+    font-size:clamp(2.05rem, 12vw, 2.8rem);
+  }
+
+  html[data-theme="theme-minimal"] .tag{
+    font-size:0.88rem;
+  }
+}
+</style>
 </head>
+
 <body>
-  <main class="app">
-    <header>
-      <div class="date-line" id="localDate">Loading</div>
-      <div class="main-clock" id="mainClock">00<span class="dim">:</span>00<span class="dim">:</span>00</div>
-      <div class="subline" id="deviceLine">LOCATION</div>
-    </header>
 
-    <section class="controls">
-      <input id="countryInput" type="text" placeholder="Type any country, for example Saudi Arabia" autocomplete="off" />
-      <button id="addBtn">Add Clock</button>
-    </section>
+<div class="container">
 
-    <div class="message" id="message">Loading all countries...</div>
+<button class="theme-toggle" id="themeToggle" type="button">Theme: Dark</button>
 
-    <section class="empty" id="emptyState">No clocks added yet.</section>
-    <section class="grid" id="clockGrid"></section>
-  </main>
+<div class="quote">
+اللَّهُمَّ إِنِّي قَدْ ارْتَكَبْتُ ذُنُوبًا عَظِيمَةً<br>
+وَأَنْتَ عَظِيمُ الرَّحْمَةِ فَاغْفِرْ لِي وَتُبْ عَلَيَّ
+</div>
 
-  <script src="https://cdn.jsdelivr.net/npm/tz-lookup@6.1.25/tz.js"></script>
+<h1>The Count</h1>
 
-  <script>
-    const STORAGE_KEY = "savedWorldClocks24h";
+<div class="start-card">
+<div class="start">
+Start Date and Time (Manchester, UK):<br>
+<strong>15 April 2026, 15:50 (BST)</strong>
+</div>
 
-    const countryInput = document.getElementById("countryInput");
-    const addBtn = document.getElementById("addBtn");
-    const clockGrid = document.getElementById("clockGrid");
-    const emptyState = document.getElementById("emptyState");
-    const mainClock = document.getElementById("mainClock");
-    const localDate = document.getElementById("localDate");
-    const message = document.getElementById("message");
-    const deviceLine = document.getElementById("deviceLine");
-    let draggedIndex = null;
+<div class="now-list">
+<div id="nowManchester">Manchester, UK: <strong>--</strong></div>
+<div id="nowJeddah">Jeddah, Saudi Arabia: <strong>--</strong></div>
+<div id="nowHyderabad">Hyderabad, India: <strong>--</strong></div>
+</div>
+</div>
 
-    const fallbackCountries = [
-      { country: "Afghanistan", capital: "Kabul", zone: "Asia/Kabul" },
-      { country: "Albania", capital: "Tirana", zone: "Europe/Tirane" },
-      { country: "Algeria", capital: "Algiers", zone: "Africa/Algiers" },
-      { country: "Argentina", capital: "Buenos Aires", zone: "America/Argentina/Buenos_Aires" },
-      { country: "Australia", capital: "Canberra", zone: "Australia/Sydney" },
-      { country: "Bangladesh", capital: "Dhaka", zone: "Asia/Dhaka" },
-      { country: "Brazil", capital: "Brasília", zone: "America/Sao_Paulo" },
-      { country: "Canada", capital: "Ottawa", zone: "America/Toronto" },
-      { country: "China", capital: "Beijing", zone: "Asia/Shanghai" },
-      { country: "Egypt", capital: "Cairo", zone: "Africa/Cairo" },
-      { country: "France", capital: "Paris", zone: "Europe/Paris" },
-      { country: "Germany", capital: "Berlin", zone: "Europe/Berlin" },
-      { country: "India", capital: "New Delhi", zone: "Asia/Kolkata" },
-      { country: "Indonesia", capital: "Jakarta", zone: "Asia/Jakarta" },
-      { country: "Italy", capital: "Rome", zone: "Europe/Rome" },
-      { country: "Japan", capital: "Tokyo", zone: "Asia/Tokyo" },
-      { country: "Malaysia", capital: "Kuala Lumpur", zone: "Asia/Kuala_Lumpur" },
-      { country: "Mexico", capital: "Mexico City", zone: "America/Mexico_City" },
-      { country: "Nigeria", capital: "Abuja", zone: "Africa/Lagos" },
-      { country: "Pakistan", capital: "Islamabad", zone: "Asia/Karachi" },
-      { country: "Qatar", capital: "Doha", zone: "Asia/Qatar" },
-      { country: "Russia", capital: "Moscow", zone: "Europe/Moscow" },
-      { country: "Saudi Arabia", capital: "Riyadh", zone: "Asia/Riyadh" },
-      { country: "Singapore", capital: "Singapore", zone: "Asia/Singapore" },
-      { country: "South Africa", capital: "Pretoria", zone: "Africa/Johannesburg" },
-      { country: "Spain", capital: "Madrid", zone: "Europe/Madrid" },
-      { country: "Sri Lanka", capital: "Sri Jayawardenepura Kotte", zone: "Asia/Colombo" },
-      { country: "Thailand", capital: "Bangkok", zone: "Asia/Bangkok" },
-      { country: "Turkey", capital: "Ankara", zone: "Europe/Istanbul" },
-      { country: "United Arab Emirates", capital: "Abu Dhabi", zone: "Asia/Dubai" },
-      { country: "United Kingdom", capital: "London", zone: "Europe/London" },
-      { country: "United States", capital: "Washington, D.C.", zone: "America/New_York" }
-    ];
+<div class="scoreboard">
+<div class="scoreboard-inner">
 
-    let availableCountries = [];
-    let clocks = loadClocks();
+<div class="slot" data-unit="days">
+<svg class="ring" viewBox="0 0 100 100" aria-hidden="true">
+<circle class="ring-bg" cx="50" cy="50" r="42"></circle>
+<circle class="ring-progress" cx="50" cy="50" r="42"></circle>
+</svg>
+<div class="digit" id="days">0</div>
+<div class="tag">Days</div>
+</div>
 
-    function loadClocks() {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (!saved) return [];
+<div class="slot" data-unit="hours">
+<svg class="ring" viewBox="0 0 100 100" aria-hidden="true">
+<circle class="ring-bg" cx="50" cy="50" r="42"></circle>
+<circle class="ring-progress" cx="50" cy="50" r="42"></circle>
+</svg>
+<div class="digit" id="hours">0</div>
+<div class="tag">Hours</div>
+</div>
 
-      try {
-        const parsed = JSON.parse(saved);
-        return Array.isArray(parsed) ? parsed : [];
-      } catch {
-        return [];
-      }
-    }
+<div class="slot" data-unit="minutes">
+<svg class="ring" viewBox="0 0 100 100" aria-hidden="true">
+<circle class="ring-bg" cx="50" cy="50" r="42"></circle>
+<circle class="ring-progress" cx="50" cy="50" r="42"></circle>
+</svg>
+<div class="digit" id="minutes">0</div>
+<div class="tag">Minutes</div>
+</div>
 
-    function saveClocks() {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(clocks));
-    }
+<div class="slot" data-unit="seconds">
+<svg class="ring" viewBox="0 0 100 100" aria-hidden="true">
+<circle class="ring-bg" cx="50" cy="50" r="42"></circle>
+<circle class="ring-progress" cx="50" cy="50" r="42"></circle>
+</svg>
+<div class="digit" id="seconds">0</div>
+<div class="tag">Seconds</div>
+</div>
 
-    async function loadCountries() {
-      message.textContent = "Loading all countries...";
+</div>
+</div>
 
-      try {
-        const response = await fetch("https://restcountries.com/v3.1/all?fields=name,capital,capitalInfo,cca2,altSpellings");
-        if (!response.ok) throw new Error("Could not load countries");
+</div>
 
-        const countries = await response.json();
+<script>
+const startTime = Date.UTC(2026,3,15,14,50,0);
+const CIRCUMFERENCE = 2 * Math.PI * 42;
 
-        availableCountries = countries
-          .map(country => {
-            const capital = country.capital && country.capital[0] ? country.capital[0] : "No official capital";
-            const latlng = country.capitalInfo && country.capitalInfo.latlng ? country.capitalInfo.latlng : null;
+const themes = [
+  { key: "theme-dark", label: "Dark" },
+  { key: "theme-minimal", label: "Minimal" }
+];
 
-            if (!latlng || capital === "No official capital" || typeof tzlookup !== "function") return null;
+const themeToggle = document.getElementById("themeToggle");
+const root = document.documentElement;
+const savedTheme = localStorage.getItem("countTheme");
 
-            return {
-              country: country.name.common,
-              officialName: country.name.official,
-              capital,
-              zone: tzlookup(latlng[0], latlng[1]),
-              code: country.cca2,
-              altSpellings: country.altSpellings || []
-            };
-          })
-          .filter(Boolean)
-          .sort((a, b) => a.country.localeCompare(b.country));
+function setTheme(themeKey){
+  const theme = themes.find(t => t.key === themeKey) || themes[0];
+  root.setAttribute("data-theme", theme.key);
+  themeToggle.textContent = "Theme: " + theme.label;
+  localStorage.setItem("countTheme", theme.key);
+}
 
-        message.textContent = `${availableCountries.length} countries loaded. Type a country name and add its capital clock.`;
-      } catch (error) {
-        availableCountries = fallbackCountries;
-        message.textContent = "Full country list could not load online, so a fallback list is active.";
-      }
-    }
+function cycleTheme(){
+  const currentTheme = root.getAttribute("data-theme");
+  const currentIndex = themes.findIndex(t => t.key === currentTheme);
+  const nextIndex = (currentIndex + 1) % themes.length;
+  setTheme(themes[nextIndex].key);
+}
 
-    function normalise(value) {
-      return String(value).trim().toLowerCase();
-    }
+setTheme(savedTheme || "theme-dark");
+themeToggle.addEventListener("click", cycleTheme);
 
-    function findCountry(input) {
-      const typed = normalise(input);
-      if (!typed) return null;
+function updateClock(id, label, tz){
+  const now = new Date();
+  const dateText = now.toLocaleDateString("en-GB", {
+    timeZone: tz,
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric"
+  });
+  const timeText = now.toLocaleTimeString("en-GB", {
+    timeZone: tz,
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit"
+  });
 
-      return availableCountries.find(item => {
-        const names = [
-          item.country,
-          item.officialName,
-          item.code,
-          ...(item.altSpellings || [])
-        ].filter(Boolean).map(normalise);
+  document.getElementById(id).innerHTML = `${label}: <strong>${dateText}, ${timeText}</strong>`;
+}
 
-        return names.includes(typed);
-      }) || availableCountries.find(item => normalise(item.country).startsWith(typed));
-    }
+function setRingProgress(unit, fraction){
+  const slot = document.querySelector(`.slot[data-unit="${unit}"]`);
+  if(!slot) return;
+  const ring = slot.querySelector(".ring-progress");
+  if(!ring) return;
 
-    function formatTime(zone) {
-      return new Intl.DateTimeFormat("en-GB", {
-        timeZone: zone,
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-        hour12: false
-      }).format(new Date());
-    }
+  const clamped = Math.max(0, Math.min(1, fraction));
+  ring.style.strokeDasharray = CIRCUMFERENCE;
+  ring.style.strokeDashoffset = CIRCUMFERENCE * (1 - clamped);
+}
 
-    function formatDate(zone) {
-      return new Intl.DateTimeFormat("en-GB", {
-        timeZone: zone,
-        weekday: "short",
-        day: "2-digit",
-        month: "short",
-        year: "numeric"
-      }).format(new Date());
-    }
+function updateTimer(){
+  const diff = Date.now() - startTime;
+  const s = Math.floor(diff / 1000);
 
-    function renderCards() {
-      clockGrid.innerHTML = "";
-      emptyState.style.display = clocks.length ? "none" : "block";
+  const totalDays = Math.floor(s / 86400);
+  const hours = Math.floor((s % 86400) / 3600);
+  const minutes = Math.floor((s % 3600) / 60);
+  const seconds = s % 60;
 
-      clocks.forEach((clock, index) => {
-        const card = document.createElement("article");
-        card.className = "clock-card";
+  document.getElementById("days").textContent = totalDays;
+  document.getElementById("hours").textContent = hours;
+  document.getElementById("minutes").textContent = minutes;
+  document.getElementById("seconds").textContent = seconds;
 
-        card.draggable = true;
-        card.dataset.index = index;
+  const daysProgress = (totalDays % 365) / 365;
+  const hoursProgress = hours / 24;
+  const minutesProgress = minutes / 60;
+  const secondsProgress = seconds / 60;
 
-        card.innerHTML = `
-          <div class="city-row">
-            <div>
-              <div class="city">${escapeHTML(clock.capital)}</div>
-              <div class="country">${escapeHTML(clock.country)}</div>
-              <div class="zone">${escapeHTML(clock.zone)}</div>
-            </div>
-            <div>
-              <button class="delete-btn" data-index="${index}">Delete</button>
-            </div>
-          </div>
-          <div class="time" data-zone="${clock.zone}">00:00:00</div>
-          <div class="date" data-date-zone="${clock.zone}">Loading</div>
-        `;
-        clockGrid.appendChild(card);
-      });
+  setRingProgress("days", daysProgress);
+  setRingProgress("hours", hoursProgress);
+  setRingProgress("minutes", minutesProgress);
+  setRingProgress("seconds", secondsProgress);
+}
 
-      document.querySelectorAll(".delete-btn").forEach(button => {
-        button.addEventListener("click", () => {
-          const index = Number(button.dataset.index);
-          clocks.splice(index, 1);
-          saveClocks();
-          renderCards();
-          tick();
-        });
-      });
+function tick(){
+  updateClock("nowManchester", "Manchester, UK", "Europe/London");
+  updateClock("nowJeddah", "Jeddah, Saudi Arabia", "Asia/Riyadh");
+  updateClock("nowHyderabad", "Hyderabad, India", "Asia/Kolkata");
+  updateTimer();
+}
 
-      document.querySelectorAll(".clock-card").forEach(card => {
-        card.addEventListener("dragstart", () => {
-          draggedIndex = Number(card.dataset.index);
-          card.classList.add("dragging");
-        });
+tick();
+setInterval(tick, 1000);
+</script>
 
-        card.addEventListener("dragend", () => {
-          card.classList.remove("dragging");
-          draggedIndex = null;
-        });
-
-        card.addEventListener("dragover", event => {
-          event.preventDefault();
-        });
-
-        card.addEventListener("drop", event => {
-          event.preventDefault();
-          const targetIndex = Number(card.dataset.index);
-          moveClock(draggedIndex, targetIndex);
-        });
-      });
-    }
-
-    function moveClock(oldIndex, newIndex) {
-      if (oldIndex === null || oldIndex === newIndex) return;
-
-      const [clock] = clocks.splice(oldIndex, 1);
-      clocks.splice(newIndex, 0, clock);
-      saveClocks();
-      renderCards();
-      tick();
-    }
-
-    function tick() {
-      const now = new Date();
-      const localTime = new Intl.DateTimeFormat("en-GB", {
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-        hour12: false
-      }).format(now);
-
-      const [hh, mm, ss] = localTime.split(":");
-      mainClock.innerHTML = `${hh}<span class="dim">:</span>${mm}<span class="dim">:</span>${ss}`;
-
-      localDate.textContent = new Intl.DateTimeFormat("en-GB", {
-        weekday: "long",
-        day: "2-digit",
-        month: "long",
-        year: "numeric"
-      }).format(now).toUpperCase();
-
-      const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
-      const city = tz.split("/").pop().replaceAll("_", " ");
-      deviceLine.textContent = `${city.toUpperCase()} • ${tz.toUpperCase()}`;
-
-      document.querySelectorAll("[data-zone]").forEach(el => {
-        el.textContent = formatTime(el.dataset.zone);
-      });
-
-      document.querySelectorAll("[data-date-zone]").forEach(el => {
-        el.textContent = formatDate(el.dataset.dateZone);
-      });
-    }
-
-    function addClock() {
-      const country = findCountry(countryInput.value);
-
-      if (!country) {
-        message.textContent = "Country not found. Type the country name correctly.";
-        return;
-      }
-
-      const exists = clocks.some(clock => clock.country === country.country && clock.capital === country.capital);
-
-      if (exists) {
-        message.textContent = "This country clock is already added.";
-        return;
-      }
-
-      clocks.push(country);
-      saveClocks();
-      countryInput.value = "";
-      message.textContent = `${country.country} added. Capital city: ${country.capital}.`;
-      renderCards();
-      tick();
-    }
-
-    function escapeHTML(value) {
-      return String(value)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
-    }
-
-    addBtn.addEventListener("click", addClock);
-    countryInput.addEventListener("keydown", event => {
-      if (event.key === "Enter") addClock();
-    });
-
-    loadCountries();
-    renderCards();
-    tick();
-    setInterval(tick, 1000);
-  </script>
 </body>
 </html>
