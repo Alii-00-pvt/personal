@@ -273,14 +273,21 @@
       letter-spacing: -1.5px;
       position: relative;
       z-index: 1;
+      /* Pitch black ring with small gap */
       background:
-        radial-gradient(circle, rgba(255, 255, 255, 0.95) 57%, transparent 58%),
-        conic-gradient(var(--red) 0deg 285deg, transparent 285deg 360deg),
-        conic-gradient(var(--ring-bg) 0deg 360deg);
+        radial-gradient(circle, #ffffff 62%, transparent 63%),
+        conic-gradient(#000000 0deg 345deg, transparent 345deg 360deg);
       box-shadow:
-        inset 0 0 0 13px rgba(255, 255, 255, 0.75),
-        inset 0 0 0 24px rgba(230, 230, 230, 0.7),
-        0 14px 28px rgba(0, 0, 0, 0.06);
+        0 10px 22px rgba(0, 0, 0, 0.08);
+    }
+
+    .time::after {
+      content: "";
+      position: absolute;
+      inset: 18px;
+      border-radius: 50%;
+      border: 0;
+      pointer-events: none;
     }
 
     .time::after {
@@ -527,7 +534,6 @@
               <div class="zone">${escapeHTML(clock.zone)}</div>
             </div>
             <div>
-              <div class="drag-handle" title="Drag to reorder">☰</div>
               <button class="delete-btn" data-index="${index}">Delete</button>
             </div>
           </div>
